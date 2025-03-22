@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module InputSources
-  class Fetch
+  class FetchFiles
     include BaseService
 
     attr_reader :files

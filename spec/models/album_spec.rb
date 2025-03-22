@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: albums
+#
+#  id         :integer          not null, primary key
+#  title      :string           not null
+#  year       :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  artist_id  :integer          not null
+#
+# Indexes
+#
+#  index_albums_on_artist_id            (artist_id)
+#  index_albums_on_artist_id_and_title  (artist_id,title)
+#
+# Foreign Keys
+#
+#  artist_id  (artist_id => artists.id)
+#
+require 'rails_helper'
+
+RSpec.describe Album, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
+end

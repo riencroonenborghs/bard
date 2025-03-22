@@ -14,5 +14,5 @@
 #  index_input_sources_on_path  (path) UNIQUE
 #
 class InputSource < ApplicationRecord
-  validates :path, uniqueness: true
+  validates :path, presence: true, uniqueness: true
 end
