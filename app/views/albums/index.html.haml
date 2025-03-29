@@ -9,6 +9,9 @@
     .rounded-lg.shadow-lg.bg-gray-700.p-4
       .flex.flex-col
         .flex.flex-row.justify-center
+          .font-bold.break-all.overflow-auto
+            = album.artist.name
+        .flex.flex-row.justify-center
           .text-lg.font-bold.break-all.overflow-auto
             = album.title
         .flex.flex-row.justify-center

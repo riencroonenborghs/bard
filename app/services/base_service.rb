@@ -17,4 +17,13 @@ module BaseService
   def failure?
     !success?
   end
+
+  private
+
+  def add_error(message, field: :base)
+    klass = self.class.to_s.split("::").last
+    formatted_message = "[#{klass}] #{message}"
+    errors.add(field, formatted_message)
+    Rails.logger.error(formatted_message)
+  end
 end
