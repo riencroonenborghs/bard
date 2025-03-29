@@ -40,7 +40,8 @@ module InputSources
         )
         album = find_or_create_album(
           artist: artist,
-          album_title: parser.album_title
+          album_title: parser.album_title,
+          album_year: parser.album_year
         )
         find_or_create_track(
           path: file,
@@ -70,14 +71,14 @@ module InputSources
       end
     end
 
-    def find_or_create_album(artist:, album_title:)
+    def find_or_create_album(artist:, album_title:, album_year:)
       @albums ||= {}
       @albums[artist.name] ||= {}
       @albums[artist.name][album_title] ||= begin
-        album = artist.albums.find_by(title: album_title)
+        album = artist.albums.find_by(title: album_title, year: album_year)
         return album if album
 
-        album = artist.albums.create!(title: album_title)
+        album = artist.albums.create!(title: album_title, year: album_year)
         album
       end
     end

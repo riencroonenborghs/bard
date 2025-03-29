@@ -2,7 +2,7 @@
 
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.includes(albums: :tracks).order(name: :asc)
+    @artists = Artist.includes(albums: :tracks).order(name: :asc).page(params[:page].to_i || 1)
   end
 
   def show

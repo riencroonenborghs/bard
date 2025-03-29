@@ -2,7 +2,7 @@
 
 class AlbumsController < ApplicationController
   def index
-    @albums = Album.all
+    @albums = Album.page(params[:page].to_i || 1)
   end
 
   def show

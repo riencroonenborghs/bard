@@ -4,7 +4,7 @@ module InputSources
   class ParseFile
     include BaseService
 
-    attr_reader :artist_name, :album_title, :file_title, :file_format
+    attr_reader :artist_name, :album_title, :album_year, :file_title, :file_format
 
     def initialize(file:)
       @file = file
@@ -34,7 +34,12 @@ module InputSources
       @album_remainder, album_title = File.split(@filename_remainder)
       return errors.add(:base, "No album title found") unless album_title
 
-      @album_title = album_title
+      if (matches = album_title.match(/(.*) \((\d+)\)/))
+        @album_title = matches[1]
+        @album_year = matches[2]
+      else
+        @album_title = album_title
+      end
     end
 
     def parse_artist

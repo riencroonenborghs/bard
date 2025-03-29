@@ -19,4 +19,8 @@ class Artist < ApplicationRecord
   has_many :tracks, through: :albums
 
   validates :name, presence: true
+
+  def valid_image?
+    last_fm_image && last_fm_image != "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
+  end
 end

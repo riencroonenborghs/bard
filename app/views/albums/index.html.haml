@@ -9,18 +9,24 @@
     .rounded-lg.shadow-lg.bg-gray-700.p-4
       .flex.flex-col
         .flex.flex-row.justify-center
-          .font-bold.break-all.overflow-auto
-            = album.artist.name
-        .flex.flex-row.justify-center
+          .text-md.font-thin.break-all.overflow-auto.flex
+            .rounded.bg-gray-600.p-1
+              = render IconComponent.new(name: :artist, size: 2)
+            .ms-2
+              = album.artist.name
+        .flex.flex-row.justify-center.pt-4
+          .rounded-lg.shadow-sm.bg-gray-600.w-32
+            .flex.flex-row.justify-center.p-2
+              - if album.last_fm_image.present?
+                = image_tag album.last_fm_image
+              - else
+                = render IconComponent.new(name: :artist, size: 12)
+        .flex.flex-row.justify-center.pt-4
           .text-lg.font-bold.break-all.overflow-auto
             = album.title
         .flex.flex-row.justify-center
           .text-sm.font-thin
             = album.year
-        .flex.flex-row.justify-center.pt-4
-          .rounded-lg.shadow-sm.bg-gray-600.w-32
-            .flex.flex-row.justify-center.p-2
-              = render IconComponent.new(name: :artist, size: 12)
-        .flex.flex-row.justify-center.pt-4
-          .text-xs.font-thin
-            = pluralize(album.tracks.count, "Track", "Tracks")
+        -# .flex.flex-row.justify-center
+        -#   .text-xs.font-thin
+        -#     = pluralize(album.tracks.count, "Track", "Tracks")
