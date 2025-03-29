@@ -4,20 +4,18 @@ module LastFm
   class FindArtist
     include BaseService
 
-    METHOD = "artist.search"
+    METHOD = "artist.getInfo"
 
-    attr_reader :artists
+    attr_reader :artist
 
-    def initialize(artist_name:)
-      @artist_name = artist_name
+    def initialize(mbid:)
+      @mbid = mbid
     end
 
     def perform
-      service = SendRequest.perform(method: METHOD, options: { artist: @artist_name })
+      service = SendRequest.perform(method: METHOD, options: { mbid: @mbid })
       if service.success?
-        @artists = service.data.dig("results", "artistmatches", "artist").map do |artist|
-          LastFm::Artist.parse(data: artist)
-        end
+        @artist = LastFm::Artist.parse(data: service.data.dig("artist"))
         return
       end
 

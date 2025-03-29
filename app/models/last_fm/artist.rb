@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module LastFm
-  class Artist < Struct.new(:name, :mbid, :url, :images, :streamable, keyword_init: true)
+  class Artist < Struct.new(:name, :mbid, :url, :images, keyword_init: true)
     def self.parse(data:)
       new(
         name: data["name"],
@@ -11,8 +11,7 @@ module LastFm
           (data["image"] || []).each do |img|
             ret[img["size"]] = img["#text"]
           end
-        end,
-        streamable: data["streamable"]
+        end
       )
     end
   end

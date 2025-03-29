@@ -2,12 +2,15 @@
 #
 # Table name: albums
 #
-#  id         :integer          not null, primary key
-#  title      :string           not null
-#  year       :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  artist_id  :integer          not null
+#  id            :integer          not null, primary key
+#  last_fm_image :string
+#  last_fm_mbid  :string
+#  last_fm_url   :string
+#  title         :string           not null
+#  year          :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  artist_id     :integer          not null
 #
 # Indexes
 #

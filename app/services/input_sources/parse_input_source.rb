@@ -49,6 +49,14 @@ module InputSources
           file_format: parser.file_format
         )
       end
+
+      Artist.all.each do |artist|
+        FindLastFmArtistJob.perform_later(artist: artist)
+      end
+
+      Album.all.each do |album|
+        FindLastFmAlbumJob.perform_later(album: album)
+      end
     end
 
     def find_or_create_artist(artist_name:)

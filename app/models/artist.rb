@@ -2,10 +2,13 @@
 #
 # Table name: artists
 #
-#  id         :integer          not null, primary key
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  last_fm_image :string
+#  last_fm_mbid  :string
+#  last_fm_url   :string
+#  name          :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 # Indexes
 #

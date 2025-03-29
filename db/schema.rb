@@ -15,6 +15,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_22_215021) do
     t.integer "artist_id", null: false
     t.string "title", null: false
     t.integer "year"
+    t.string "last_fm_mbid"
+    t.string "last_fm_url"
+    t.string "last_fm_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["artist_id", "title"], name: "index_albums_on_artist_id_and_title"
@@ -23,6 +26,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_22_215021) do
 
   create_table "artists", force: :cascade do |t|
     t.string "name", null: false
+    t.string "last_fm_mbid"
+    t.string "last_fm_url"
+    t.string "last_fm_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_artists_on_name", unique: true
