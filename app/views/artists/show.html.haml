@@ -1,17 +1,15 @@
 - content_for :meta_title do
   \- Artists
-  \- #{@artist.name}
-  
+  \-
+  = @artist.name
 
-.p-16
-  .text-5xl
+.p-8
+  .text-4xl.uppercase.text-gray-400
+    = link_to artists_path do
+      ARTISTS
+  .text-2xl.text-gray-400
     = @artist.name
 
-  .pt-8.grid.grid-cols-4.gap-4
-    - @artist.albums.each do |album|
-      = link_to album_path(album) do
-        .p-6.shadow-md.bg-sky-50.flex.flex-col
-          .text-2xl
-            = album.title
-          .text-sm.font-light
-            = pluralize(album.tracks.count, "Track", "Tracks")
+.p-8.w-full.grid.grid-cols-4.gap-4
+  - @artist.albums.each do |album|
+    = render AlbumComponent.new(album: album)
