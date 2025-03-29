@@ -1,0 +1,20 @@
+- content_for :meta_title do
+  \- Artists
+
+.p-8
+  .text-4xl.uppercase.text-gray-400 ARTISTS
+
+.p-8.w-full.grid.grid-cols-4.gap-4
+  - @artists.each do |artist|
+    .rounded-lg.shadow-lg.bg-gray-700.p-4
+      .flex.flex-col
+        .flex.flex-row.justify-center
+          .rounded-lg.shadow-sm.bg-gray-600.w-32
+            .flex.flex-row.justify-center.p-2
+              = render IconComponent.new(name: :artist, size: 12)
+        .flex.flex-row.justify-center.pt-4
+          .text-lg.font-bold
+            = artist.name
+        .flex.flex-row.justify-center
+          .text-xs.font-thin
+            = pluralize(artist.albums.count, "Album", "Albums")

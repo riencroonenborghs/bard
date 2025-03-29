@@ -1,0 +1,19 @@
+.absolute.bottom-0.right-px
+  - if flash[:alert]
+    .alert.p-2.bg-amber-300.text-amber-800.flex.justify-between.items-center.m-1
+      .flex.items-center
+        .text-3xl.me-2
+          -# = render IconComponent.new(name: :exclamation_triangle)
+        .me-2
+          = flash[:alert]
+      = link_to "#", "data-action" => "click->alerts#dismiss" do
+        -# = render IconComponent.new(name: :close)
+  - if flash[:notice]
+    .alert.p-2.bg-lime-300.text-lime-800.flex.justify-between.items-center.m-1
+      .flex.items-center
+        .text-3xl.me-2
+          -# = render IconComponent.new(name: :smiley_face)
+        .me-2 
+          = flash[:notice]
+      = link_to "#", "data-action" => "click->alerts#dismiss" do
+        -# = render IconComponent.new(name: :close)

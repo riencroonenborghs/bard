@@ -1,0 +1,74 @@
+!!!
+%html
+  %head
+    %title
+      Bard
+      = yield :meta_title 
+    %meta(name="viewport" content="width=device-width, initial-scale=1")
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+
+
+  %body(class="c_#{controller_name} a_#{action_name}" data-controller="alerts")
+    .flex.flex-row
+      #menu.w-72.bg-gray-600.text-white(style="height: calc(100vh);")
+        .flex.flex-col
+          .flex.flex-row.justify-center.pt-8
+            = link_to root_path do
+              .text-4xl.uppercase.text-gray-400
+                Bard
+          .flex.flex-col.p-4.ps-8.pe-8
+            .text-lg.uppercase.text-gray-500 menu
+            -# .border-b.border-gray-500.w-64
+            = link_to artists_path, class: "pt-2 pb-2" do
+              Artists
+            = link_to albums_path, class: "pt-2 pb-2" do
+              Albums
+            = link_to songs_path, class: "pt-2 pb-2" do
+              Songs
+            = link_to radio_path, class: "pt-2 pb-2" do
+              Radio
+      #content.bg-gray-800.text-white.w-full.overflow-auto(style="height: calc(100vh);")
+        = yield
+
+          
+      -# #menu.w-full.bg-sky-500.p-4
+      -#   .ps-16
+      -#     .flex.flex-row.items-center
+      -#       = link_to root_path do
+      -#         .flex.flex-row.text-4xl.items-center
+      -#           = render IconComponent.new(name: :music)
+      -#           %span
+      -#             Bard
+      -#       = link_to artists_path, class: "ps-4 ps-4" do
+      -#         .flex.flex-row
+      -#           %span(class="#{'border-b' if active_page?(artists_path) || current_page?(root_path)}")
+      -#             Artists
+      -#       = link_to albums_path, class: "ps-4 ps-4" do
+      -#         .flex.flex-row
+      -#           %span(class="#{'border-b' if active_page?(albums_path)}")
+      -#             Albums
+      -#       = link_to albums_path, class: "ps-4 ps-4" do
+      -#         .flex.flex-row
+      -#           %span Tracks
+      -# #content
+      -#   = yield
+
+    -# .flex.flex-row(style="height: calc(100vh);")
+    -#   #menu.w-16.bg-sky-500.text-white
+    -#     .flex.flex-col
+    -#       .pt-4.flex.justify-center
+    -#         = link_to root_path do
+    -#           = render IconComponent.new(name: :music)
+    -#       .pt-8.flex.justify-center
+    -#         = link_to artists_path do
+    -#           = render IconComponent.new(name: :artist, size: 4, color: active_page?(artists_path) || current_page?(root_path) ? "oklch(0.391 0.09 240.876)" : nil)
+    -#       .pt-2.flex.justify-center
+    -#         = link_to albums_path do
+    -#           = render IconComponent.new(name: :album, size: 4, color: active_page?(albums_path) ? "oklch(0.391 0.09 240.876)" : nil)
+    -#   = yield
+    
+    = render "/layouts/flash_messages"
