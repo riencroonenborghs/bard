@@ -4,7 +4,7 @@ module InputSources
   class ParseFile
     include BaseService
 
-    attr_reader :artist_name, :album_title, :track_title, :track_file_format
+    attr_reader :artist_name, :album_title, :file_title, :file_format
 
     def initialize(file:)
       @file = file
@@ -26,8 +26,8 @@ module InputSources
       @filename_remainder, filename = File.split(@file)
       return errors.add(:base, "No filename") unless filename
 
-      @track_title, @track_file_format = filename.split(/(#{Track.file_formats.keys.join("|")})/)
-      @track_title.chop!
+      @file_title, @file_format = filename.split(/(#{Track.file_formats.keys.join("|")})/)
+      @file_title.chop!
     end
 
     def parse_album

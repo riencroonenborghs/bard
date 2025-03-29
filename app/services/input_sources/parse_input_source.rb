@@ -45,8 +45,8 @@ module InputSources
         find_or_create_track(
           path: file,
           album: album,
-          track_title: parser.track_title,
-          track_file_format: parser.track_file_format
+          file_title: parser.file_title,
+          file_format: parser.file_format
         )
       end
     end
@@ -74,13 +74,13 @@ module InputSources
       end
     end
 
-    def find_or_create_track(path:, album:, track_title:, track_file_format:)
-      return if album.tracks.exists?(title: track_title, file_format: track_file_format)
+    def find_or_create_track(path:, album:, file_title:, file_format:)
+      return if album.tracks.exists?(title: file_title, file_format: file_format)
 
       track = album.tracks.build(
         path: path,
-        title: track_title,
-        file_format: track_file_format
+        file_title: file_title,
+        file_format: file_format
       )
       return if track.invalid?
 

@@ -39,11 +39,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_22_215021) do
 
   create_table "tracks", force: :cascade do |t|
     t.integer "album_id", null: false
+    t.string "title"
     t.string "path", null: false
-    t.string "title", null: false
+    t.string "file_title", null: false
     t.integer "file_format", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["album_id", "file_title", "file_format"], name: "index_tracks_on_album_id_and_file_title_and_file_format"
+    t.index ["album_id", "file_title"], name: "index_tracks_on_album_id_and_file_title"
     t.index ["album_id", "title", "file_format"], name: "index_tracks_on_album_id_and_title_and_file_format"
     t.index ["album_id", "title"], name: "index_tracks_on_album_id_and_title"
     t.index ["album_id"], name: "index_tracks_on_album_id"
