@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :artist_count
 
+  def artist_letters
+    Artist.pluck(:name).sort.map(&:first).uniq
+  end
+  helper_method :artist_letters
+
   def album_count
     Album.count
   end

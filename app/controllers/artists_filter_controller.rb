@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-class ArtistsController < ApplicationController
+class ArtistsFilterController < ApplicationController
   def index
+    @filter = params[:filter]
     @artists = Artist
       .includes(albums: :tracks)
       .order(name: :asc)
       .page(params[:page].to_i || 1)
-  end
-
-  def show
-    @artist = Artist.includes(albums: :tracks).find(params[:id])
+      .where("lower(name) like ?", "#{@filter}%")
   end
 end

@@ -4,7 +4,11 @@ require "sidekiq/cron/web"
 Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
-  resources :artists, only: [:index, :show]
+  resources :artists, only: [:index, :show] do
+    collection do
+      get "filter/:filter" => "artists_filter#index", as: :filter
+    end
+  end
   resources :albums, only: [:index, :show]
   resources :songs, only: [:index]
   
