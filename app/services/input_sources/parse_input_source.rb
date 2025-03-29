@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module InputSources
-  class CreateTracks
+  class ParseInputSource
     include BaseService
 
     def initialize(input_source:, recursive: true)
