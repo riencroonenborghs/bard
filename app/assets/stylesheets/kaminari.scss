@@ -1,0 +1,12 @@
+nav.pagination {
+  a {
+    padding: calc(var(--spacing)* 3);
+    margin: calc(var(--spacing)* 1);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-gray-700);
+  }
+  .current {
+    background-color: unset;
+    padding: calc(var(--spacing)* 3);
+  }
+}

@@ -9,12 +9,12 @@
             .ms-2
               = @album.artist.name
     .flex.flex-row.justify-center.pt-4
-      .rounded-lg.shadow-sm.bg-gray-600.w-32
+      .rounded-lg.shadow-sm.bg-gray-600.w-48
         .flex.flex-row.justify-center.p-2
           - if @album.last_fm_image.present?
             = image_tag @album.last_fm_image
           - else
-            = render IconComponent.new(name: :artist, size: 12)
+            = render IconComponent.new(name: :album, size: 22)
     .flex.flex-row.justify-center.pt-4
       .text-lg.font-bold.break-all.overflow-auto
         = @album.title

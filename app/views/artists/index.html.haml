@@ -22,3 +22,7 @@
           .flex.flex-row.justify-center
             .text-xs.font-thin
               = pluralize(artist.albums.count, "Album", "Albums")
+
+
+.p-8
+  = paginate @artists

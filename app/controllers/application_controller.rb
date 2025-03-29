@@ -1,2 +1,16 @@
 class ApplicationController < ActionController::Base
+  def artist_count
+    Artist.count
+  end
+  helper_method :artist_count
+
+  def album_count
+    Album.count
+  end
+  helper_method :album_count
+
+  def song_count
+    Track.count
+  end
+  helper_method :song_count
 end

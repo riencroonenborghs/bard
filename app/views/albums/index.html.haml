@@ -7,3 +7,6 @@
 .p-8.w-full.grid.grid-cols-4.gap-4
   - @albums.each do |album|
     = render AlbumComponent.new(album: album)
+
+.p-8
+  = paginate @albums
