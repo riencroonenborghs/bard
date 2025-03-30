@@ -7,6 +7,15 @@ class ArtistHeaderComponent < ViewComponent::Base
   end
 
   def text_size
-    @size == :md ? "text-2xl" : ""
+    case @size
+    when :md
+      "text-2xl"
+    when :lg
+      "text-3xl"
+    when :xl
+      "text-4xl"
+    else
+      ""
+    end
   end
 end

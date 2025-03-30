@@ -20,7 +20,7 @@
     .w-192
       .flex.flex-col
         .flex.flex-row.justify-center
-          = render ArtistHeaderComponent.new(artist: @album.artist, size: :md)
+          = render ArtistHeaderComponent.new(artist: @album.artist, size: :lg)
         -# .flex.flex-row.justify-center.text-2xl
         -#   = link_to artist_path(@album.artist) do
         -#     = @album.artist.name
@@ -31,5 +31,5 @@
             = image_tag @album.last_fm_image, class: "rounded-lg  w-xs"
           - else
             = render IconComponent.new(name: :album, size: 22)
-        .flex.flex-row.justify-center.text-xs.pt-4.font-thin
+        .flex.flex-row.justify-center.text-xs.pt-2.font-thin
           = @album.year
