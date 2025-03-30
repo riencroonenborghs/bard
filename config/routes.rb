@@ -14,7 +14,11 @@ Rails.application.routes.draw do
       get "filter/:filter" => "albums_filter#index", as: :filter
     end
   end
-  resources :songs, only: [:index]
+  resources :songs, only: [:index] do
+    collection do
+      get "filter/:filter" => "songs_filter#index", as: :filter
+    end
+  end
   
   get "radio" => "radio#index"
 

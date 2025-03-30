@@ -6,10 +6,12 @@
 .p-8
   .text-4xl.uppercase.text-gray-400
     = link_to artists_path do
-      Artist
+      Artists
   .text-2xl.text-gray-400
     = @artist.name
 
-.p-8.w-full.grid.grid-cols-4.gap-4
-  - @artist.albums.each do |album|
-    = render AlbumComponent.new(album: album)
+.p-8.pt-0
+  .text-2xl.uppercase.text-gray-400.pb-4 Albums
+  .w-full.grid.grid-cols-4.gap-4
+    - @artist.albums.each do |album|
+      = render AlbumComponent.new(album: album)

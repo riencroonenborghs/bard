@@ -5,16 +5,23 @@
   \- #{@album.title}
   
 
-.p-16
-  .text-5xl
+.p-8.text-gray-400
+  .text-4xl.uppercase
+    = link_to artists_path do
+      Artists
+  .text-2xl
+    = @album.artist.name
+  .pt-4.text-2xl.uppercase
     = link_to artist_path(@album.artist) do
-      = @album.artist.name
-  .text-3xl
+      Albums
+  .text-xl
     = @album.title
 
-  .pt-8.grid.grid-cols-1.gap-4
+.p-8.pt-0
+  .flex.flex-col
     - @album.tracks.each do |track|
-      = link_to "album_path(album)" do
-        .p-6.shadow-md.bg-sky-50.flex.flex-col
-          .text-2xl
-            = track.title
+      .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+        %div
+          = track.file_title
+        %div
+          = track.file_format

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :artist_count
 
   def artist_letters
-    Artist.pluck(:name).sort.map(&:first).uniq
+    Artist.pluck("lower(name)").sort.map(&:first).uniq
   end
   helper_method :artist_letters
 
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :album_count
 
   def album_letters
-    Album.pluck(:title).sort.map(&:first).uniq
+    Album.pluck("lower(title)").sort.map(&:first).uniq
   end
   helper_method :album_letters
 

@@ -1,0 +1,14 @@
+- content_for :meta_title do
+  \- Songs
+
+.p-8
+  .text-4xl.uppercase.text-gray-400 Songs
+
+-# = render LetterFilterComponent.new(letters: song_letters, filter_path: "filter_songs_path")
+
+.p-8.w-full
+  - @songs.each do |song|
+    = render SongComponent.new(song: song, details: true)
+
+.p-8
+  = paginate @songs

@@ -10,3 +10,8 @@ nav.pagination {
     padding: calc(var(--spacing)* 3);
   }
 }
+
+
+a:hover {
+  text-decoration-line: underline;
+}
