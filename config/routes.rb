@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     collection do
       get "filter/:filter" => "songs_filter#index", as: :filter
     end
+    member do
+      get "stream" => "stream_songs#show", as: :stream
+    end
   end
   
   get "radio" => "radio#index"
