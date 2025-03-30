@@ -2,20 +2,14 @@
   .flex.flex-col
     .flex.flex-row.justify-center
       .font-thin.break-all.overflow-auto
-        = link_to artist_path(@album.artist) do
-          .flex
-            .rounded.bg-gray-600.p-1
-              = render IconComponent.new(name: :artist, size: 2)
-            .ms-2
-              = @album.artist.name
+        = render ArtistHeaderComponent.new(artist: @album.artist)
     = link_to album_path(@album) do
       .flex.flex-row.justify-center.pt-4
-        .rounded-lg.shadow-sm.bg-gray-600.w-48
-          .flex.flex-row.justify-center.p-2
-            - if @album.last_fm_image.present?
-              = image_tag @album.last_fm_image
-            - else
-              = render IconComponent.new(name: :album, size: 22)
+        .flex.flex-row.justify-center.p-2
+          - if @album.last_fm_image.present?
+            = image_tag @album.last_fm_image, class: "rounded-lg"
+          - else
+            = render IconComponent.new(name: :album, size: 22)
       .flex.flex-row.justify-center.pt-4
         .text-lg.font-bold.break-all.overflow-auto
           = @album.title

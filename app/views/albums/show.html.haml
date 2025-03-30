@@ -3,25 +3,33 @@
   \- #{@album.artist.name}
   \- Album
   \- #{@album.title}
-  
 
-.p-8.text-gray-400
-  .text-4xl.uppercase
-    = link_to artists_path do
-      Artists
-  .text-2xl
-    = @album.artist.name
-  .pt-4.text-2xl.uppercase
-    = link_to artist_path(@album.artist) do
-      Albums
-  .text-xl
-    = @album.title
+.p-8
+  .text-4xl.uppercase.text-gray-400 Songs
 
-.p-8.pt-0
-  .flex.flex-col
-    - @album.tracks.each do |track|
-      .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
-        %div
-          = track.file_title
-        %div
-          = track.file_format
+.p-8
+  .flex.flex-row.justify-between
+    .flex.flex-col.w-full.pe-8
+      - @album.tracks.each do |track|
+        .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+          %div
+            = track.file_title
+          %div
+            = track.file_format
+
+    .w-192
+      .flex.flex-col
+        .flex.flex-row.justify-center
+          = render ArtistHeaderComponent.new(artist: @album.artist, size: :md)
+        -# .flex.flex-row.justify-center.text-2xl
+        -#   = link_to artist_path(@album.artist) do
+        -#     = @album.artist.name
+        .flex.flex-row.justify-center.text-xl
+          = @album.title
+        .flex.flex-row.justify-center.pt-4
+          - if @album.last_fm_image.present?
+            = image_tag @album.last_fm_image, class: "rounded-lg  w-xs"
+          - else
+            = render IconComponent.new(name: :album, size: 22)
+        .flex.flex-row.justify-center.text-xs.pt-4.font-thin
+          = @album.year
