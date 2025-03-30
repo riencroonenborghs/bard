@@ -1,0 +1,11 @@
+.p-8.pt-1.pb-1.w-full
+  .flex.flex-row
+    - @letters.each do |letter|
+      - letter_upcased = letter.upcase
+      - if letter == @filter
+        .text-gray-400.pe-4.m-1
+          = letter_upcased
+      - else
+        = link_to send(@filter_path, filter: letter_upcased) do
+          .text-gray-600.pe-4.m-1
+            = letter_upcased

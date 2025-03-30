@@ -4,6 +4,8 @@
 .p-8
   .text-4xl.uppercase.text-gray-400 Albums
 
+= render LetterFilterComponent.new(letters: album_letters, filter_path: "filter_albums_path")
+
 .p-8.w-full.grid.grid-cols-4.gap-4
   - @albums.each do |album|
     = render AlbumComponent.new(album: album)
