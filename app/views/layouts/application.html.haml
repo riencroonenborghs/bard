@@ -12,28 +12,41 @@
     = javascript_importmap_tags
     = yield :head
 
-    %body.bg-gray-400
+    %body.bg-gray-800.text-gray-300
       .flex.flex-row
         .w-64.bg-gray-600.text-white(style="height: calc(100vh)")
-          .flex.flex-col.p-2
-            .flex.flex-row.w-full.justify-center.pt-5.pb-5.text-5xl.uppercase.font-bold.text-gray-300
+          .flex.flex-col
+            .flex.flex-row.w-full.justify-center.pt-8
               = link_to root_path, "data-turbo-frame" => "content" do
-                BARD
+                .text-4xl.uppercase.text-gray-400.font-bold
+                  Bard
             
-            = link_to artists_path, "data-turbo-frame" => "content", class: "text-xl ps-2" do
-              Artists
+            .p-8
+              .text-lg.uppercase.text-gray-500 menu
 
-            = link_to albums_path, "data-turbo-frame" => "content", class: "text-xl ps-2" do
-              Albums
+            = link_to artists_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+              .flex.flex-row.justify-between
+                %div Artists
+                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+                  = artist_count
 
-            = link_to tracks_path, "data-turbo-frame" => "content", class: "text-xl ps-2" do
-              Tracks
-        .w-full
+            = link_to albums_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+              .flex.flex-row.justify-between
+                %div Albums
+                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+                  = album_count
+
+            = link_to tracks_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+              .flex.flex-row.justify-between
+                %div Tracks
+                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+                  = track_count
+        .w-full.overflow-auto(style="height: calc(100vh);")
           = turbo_frame_tag "content" do
             = yield
 
-      <%= turbo_frame_tag "player" do %>
-      <% end %>
+      -# <%= turbo_frame_tag "player" do %>
+      -# <% end %>
 
 
   -# %body(class="c_#{controller_name} a_#{action_name}" data-controller="alerts")
@@ -103,4 +116,4 @@
   -#   -#           = render IconComponent.new(name: :album, size: 4, color: active_page?(albums_path) ? "oklch(0.391 0.09 240.876)" : nil)
   -#   -#   = yield
     
-  -#   = render "/layouts/flash_messages"
+    -# = render "/layouts/flash_messages"

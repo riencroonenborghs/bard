@@ -3,12 +3,13 @@
   \-
   = @artist.name
 
-.p-8
-  .text-4xl.text-gray-400
-    = @artist.name
+= turbo_frame_tag "content" do
+  .p-8
+    .text-4xl.text-gray-400
+      = @artist.name
 
-.p-8.pt-0
-  .text-2xl.uppercase.text-gray-400.pb-4 Albums
-  .w-full.grid.grid-cols-4.gap-4
-    - @artist.albums.each do |album|
-      = render AlbumComponent.new(album: album)
+  .p-8.pt-0
+    .text-2xl.uppercase.text-gray-400.pb-4 Albums
+    .w-full.grid.grid-cols-4.gap-4
+      - @artist.albums.each do |album|
+        = render AlbumComponent.new(album: album)

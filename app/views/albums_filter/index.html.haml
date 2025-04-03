@@ -1,16 +1,17 @@
 - content_for :meta_title do
   \- '#{@filter}' Albums
 
-.p-8
-  .text-4xl.uppercase.text-gray-400
-    = link_to albums_path do
-      Albums
+= turbo_frame_tag "content" do
+  .p-8
+    .text-4xl.uppercase.text-gray-400
+      = link_to albums_path do
+        Albums
 
-= render LetterFilterComponent.new(letters: album_letters, filter_path: "filter_albums_path", filter: @filter)
+  = render LetterFilterComponent.new(letters: album_letters, filter_path: "filter_albums_path", filter: @filter)
 
-.p-8.w-full.grid.grid-cols-4.gap-4
-  - @albums.each do |album|
-    = render AlbumComponent.new(album: album)
+  .p-8.w-full.grid.grid-cols-4.gap-4
+    - @albums.each do |album|
+      = render AlbumComponent.new(album: album)
 
-.p-8
-  = paginate @albums
+  .p-8
+    = paginate @albums

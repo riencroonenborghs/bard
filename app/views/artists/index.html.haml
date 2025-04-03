@@ -1,14 +1,15 @@
 - content_for :meta_title do
   \- Artists
 
-.p-8
-  .text-4xl.uppercase.text-gray-400 Artists
+= turbo_frame_tag "content" do
+  .p-8
+    .text-4xl.uppercase.text-gray-400 Artists
 
-= render LetterFilterComponent.new(letters: artist_letters, filter_path: "filter_artists_path")
+  = render LetterFilterComponent.new(letters: artist_letters, filter_path: "filter_artists_path")
 
-.p-8.w-full.grid.grid-cols-4.gap-4
-  - @artists.each do |artist|
-    = render ArtistComponent.new(artist: artist)
+  .p-8.w-full.grid.grid-cols-4.gap-4
+    - @artists.each do |artist|
+      = render ArtistComponent.new(artist: artist)
 
-.p-8
-  = paginate @artists
+  .p-8
+    = paginate @artists
