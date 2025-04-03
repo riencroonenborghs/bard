@@ -1,0 +1,12 @@
+.flex.flex-row.items-center.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+  .w-full
+    = @track.file_title
+  - if @details
+    .w-128.text-sm.font-thin
+      = link_to artist_path(@track.album.artist) do
+        = @track.album.artist.name
+    .w-128.text-sm.font-thin
+      = link_to album_path(@track.album) do
+        = @track.album.title
+  .w-16
+    = @track.file_format

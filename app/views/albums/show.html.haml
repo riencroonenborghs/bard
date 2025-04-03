@@ -8,7 +8,7 @@
   = javascript_import_module_tag :bardAmplitude
 
 .p-8
-  .text-4xl.uppercase.text-gray-400 Songs
+  .text-4xl.uppercase.text-gray-400 Tracks
 
 .p-8
   .flex.flex-row.justify-between
@@ -38,7 +38,7 @@
           = @album.year
 
 - track = @album.tracks.sample
-%amplitude(data-name="#{track.file_title}" data-artist="#{track.album.artist.name}" data-album="#{track.album.title}" data-url="#{stream_song_url(track)}")
+%amplitude(data-name="#{track.file_title}" data-artist="#{track.album.artist.name}" data-album="#{track.album.title}" data-url="#{stream_track_url(track)}")
   
 .bottom-container.sticky.bg-gray-700.z-2.bottom-0
   %progress.amplitude-song-played-progress#song-played-progress.w-full
@@ -57,5 +57,5 @@
       = render IconComponent.new(name: :play, size: 6)
     .meta-container
       %span.song-name(data-amplitude-song-info="name")
-      %span(data-amplitude-song-info="artist"
+      %span(data-amplitude-song-info="artist")
       

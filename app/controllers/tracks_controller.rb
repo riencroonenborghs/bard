@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class SongsController < ApplicationController
+class TracksController < ApplicationController
   def index
-    @songs = Track
+    @tracks = Track
       .includes(album: :artist)
       .order("artists.name asc, albums.title asc, tracks.file_title asc")
       .page(params[:page].to_i || 1)

@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :album_letters
 
-  def song_count
+  def track_count
     Track.count
   end
-  helper_method :song_count
+  helper_method :track_count
 end

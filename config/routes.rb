@@ -14,12 +14,12 @@ Rails.application.routes.draw do
       get "filter/:filter" => "albums_filter#index", as: :filter
     end
   end
-  resources :songs, only: [:index] do
+  resources :tracks, only: [:index] do
     collection do
-      get "filter/:filter" => "songs_filter#index", as: :filter
+      get "filter/:filter" => "tracks_filter#index", as: :filter
     end
     member do
-      get "stream" => "stream_songs#show", as: :stream
+      get "stream" => "stream_tracks#show", as: :stream
     end
   end
   

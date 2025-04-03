@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StreamSongsController < ApplicationController
+class StreamTracksController < ApplicationController
   include ActionController::Live
 
   def show
