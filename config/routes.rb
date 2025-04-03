@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       get "filter/:filter" => "albums_filter#index", as: :filter
     end
   end
-  resources :tracks, only: [:index] do
+  resources :tracks, only: [:index, :show] do
     collection do
       get "filter/:filter" => "tracks_filter#index", as: :filter
     end

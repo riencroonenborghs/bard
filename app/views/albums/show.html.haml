@@ -4,9 +4,6 @@
   \- Album
   \- #{@album.title}
 
--# - content_for :head do
--#   = javascript_import_module_tag :bardAmplitude
-
 = turbo_frame_tag "content" do
   .p-8
     .text-4xl.uppercase.text-gray-400 Tracks
@@ -15,19 +12,17 @@
     .flex.flex-row.justify-between
       .flex.flex-col.w-full.pe-8
         - @album.tracks.each do |track|
-          .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
-            %div
-              = track.file_title
-            %div
-              = track.file_format
+          = link_to track_path(track), "data-turbo-frame" => "player" do
+            .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+              %div
+                = track.file_title
+              %div
+                = track.file_format
 
       .w-192
         .flex.flex-col
           .flex.flex-row.justify-center
             = render ArtistHeaderComponent.new(artist: @album.artist, size: :lg)
-          -# .flex.flex-row.justify-center.text-2xl
-          -#   = link_to artist_path(@album.artist) do
-          -#     = @album.artist.name
           .flex.flex-row.justify-center.text-xl
             = @album.title
           .flex.flex-row.justify-center.pt-4

@@ -7,4 +7,8 @@ class TracksController < ApplicationController
       .order("artists.name asc, albums.title asc, tracks.file_title asc")
       .page(params[:page].to_i || 1)
   end
+
+  def show
+    @track = Track.find_by(id: params[:id])
+  end
 end
