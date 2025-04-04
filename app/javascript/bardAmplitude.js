@@ -1,15 +1,16 @@
 import Amplitude from "amplitudejs"
 
-const amplitude = document.getElementsByTagName("amplitude")[0];
-const data = amplitude.dataset;
-
-Amplitude.init({
-  songs: [
-    {
-      "name": data.name,
-      "artist": data.artist,
-      "album": data.album,
-      "url": data.url
-    }
-  ]
+document.addEventListener("playSong", (event) => {
+  Amplitude.stop();
+  Amplitude.init({
+    songs: [
+      {
+        "name": event.detail.name,
+        "artist": event.detail.artist,
+        "album": event.detail.album,
+        "url": event.detail.url
+      }
+    ]
+  });
+  Amplitude.play();
 });

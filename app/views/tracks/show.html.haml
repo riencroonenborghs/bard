@@ -4,29 +4,63 @@
   = @track.file_title
 
 = turbo_frame_tag "player" do
-  = javascript_import_module_tag :bardAmplitude
+  .sticky.bottom-0.w-full.bg-gray-700
+    :javascript
+      setTimeout(() => {
+        const data = { name: "#{@track.title || @track.file_title}", artist: "#{@track.album.artist.name}",  album: "#{@track.album.title}", url: "#{stream_track_url(@track)}" };
+        const event = new CustomEvent("playSong", { detail: data });
+        document.dispatchEvent(event);
+      }, 500)
 
-  .p-5.sticky.bottom-0.w-full.bg-gray-700
-    = @track.file_title
+    
+    .flex.flex-col
+      #player-progress-bar-container
+        %progress#song-played-progress.amplitude-song-played-progress.w-full.bg-gray-700
+      .flex.flex-row.justify-between.p-3
+        .flex.flex-row.items-center
+          .amplitude-pause
+            = render IconComponent.new(name: :pause, size: 4)
+          .amplitude-play
+            = render IconComponent.new(name: :play, size: 4)
+          .flex.flex-row.font-thin.ms-4
+            %span.current-time
+              %span.amplitude-current-minutes
+              \:
+              %span.amplitude-current-seconds
+            -# %span.duration
+            -#   %span.amplitude-duration-minutes
+            -#   \:
+            -#   %span.amplitude-duration-seconds
+        .flex.flex-row
+          - if @track.album.last_fm_image.present?
+            = image_tag @track.album.last_fm_image, class: "rounded-lg", width: 48
+          - else
+            = render IconComponent.new(name: :album, size: 6)
+          .ms-4.flex.flex-col
+            .font-bold.text-md
+              = @track.title || @track.file_title
+            .font-thin.text-sm
+              = @track.album.title
+              &mdash;
+              = @track.album.artist.name
 
-    %amplitude(data-name="#{@track.file_title}" data-artist="#{@track.album.artist.name}" data-album="#{@track.album.title}" data-url="#{stream_track_url(@track)}")
-      
-    .bottom-container.sticky.bg-gray-700.z-2.bottom-0
-      %progress.amplitude-song-played-progress#song-played-progress.w-full
-      .time-container
-        %span.current-time
-          %span.amplitude-current-minutes
-          \:
-          %span.amplitude-current-seconds
-        %span.duration
-          %span.amplitude-duration-minutes
-          \:
-          %span.amplitude-duration-seconds
+      -#   .time-container
+      -#     %span.current-time
+      -#       %span.amplitude-current-minutes
+      -#       \:
+      -#       %span.amplitude-current-seconds
+      -#     %span.duration
+      -#       %span.amplitude-duration-minutes
+      -#       \:
+      -#       %span.amplitude-duration-seconds
           
-      .control-container
-        .amplitude-play-pause#play-pause
-          = render IconComponent.new(name: :play, size: 6)
-        .meta-container
-          %span.song-name(data-amplitude-song-info="name")
-          %span(data-amplitude-song-info="artist")
+      -# .control-container
+      -#   .flex.flex-row
+      -#     .amplitude-pause
+      -#       = render IconComponent.new(name: :pause, size: 6)
+      -#     .amplitude-play
+      -#       = render IconComponent.new(name: :play, size: 6)
+      -#   .meta-container
+      -#     %span.song-name(data-amplitude-song-info="name")
+      -#     %span(data-amplitude-song-info="artist")
               
