@@ -11,11 +11,14 @@
   .p-8
     .flex.flex-row.justify-between
       .flex.flex-col.w-full.pe-8
-        - @album.tracks.each do |track|
+        - @album.tracks.ordered.each do |track|
           = link_to track_path(track), "data-turbo-frame" => "player" do
             .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
-              %div
-                = track.file_title
+              .flex.flex-row
+                .w-16
+                  = track.position
+                .w-full
+                  = track.title || track.file_title
               %div
                 = track.file_format
 
@@ -33,25 +36,3 @@
           .flex.flex-row.justify-center.text-xs.pt-2.font-thin
             = @album.year
 
-  -# - track = @album.tracks.sample
-  -# %amplitude(data-name="#{track.file_title}" data-artist="#{track.album.artist.name}" data-album="#{track.album.title}" data-url="#{stream_track_url(track)}")
-    
-  -# .bottom-container.sticky.bg-gray-700.z-2.bottom-0
-  -#   %progress.amplitude-song-played-progress#song-played-progress.w-full
-  -#   .time-container
-  -#     %span.current-time
-  -#       %span.amplitude-current-minutes
-  -#       \:
-  -#       %span.amplitude-current-seconds
-  -#     %span.duration
-  -#       %span.amplitude-duration-minutes
-  -#       \:
-  -#       %span.amplitude-duration-seconds
-        
-  -#   .control-container
-  -#     .amplitude-play-pause#play-pause
-  -#       = render IconComponent.new(name: :play, size: 6)
-  -#     .meta-container
-  -#       %span.song-name(data-amplitude-song-info="name")
-  -#       %span(data-amplitude-song-info="artist")
-        

@@ -1,7 +1,11 @@
 .flex.flex-row.items-center.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
   .w-full
     = link_to track_path(@track), "data-turbo-frame" => "player" do
-      = @track.file_title
+      .flex.flex-row
+        .w-16
+          = @track.position
+        .w-full
+          = @track.title || @track.file_title
   - if @details
     .w-128.text-sm.font-thin
       = link_to artist_path(@track.album.artist) do

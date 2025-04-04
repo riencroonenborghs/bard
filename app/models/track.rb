@@ -3,9 +3,11 @@
 # Table name: tracks
 #
 #  id          :integer          not null, primary key
+#  duration    :integer
 #  file_format :integer          default("opus"), not null
 #  file_title  :string           not null
 #  path        :string           not null
+#  position    :integer
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -47,6 +49,8 @@ class Track < ApplicationRecord
 
   validates :path, :file_title, presence: true
   validates :file_format, inclusion: { in: self.file_formats.keys }
+
+  scope :ordered, -> { order(position: :asc) }
 
   def artist
     album.artist

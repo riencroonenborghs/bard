@@ -11,7 +11,9 @@ class FindLastFmAlbumJob < ApplicationJob
 
     found = { distance: 1_000, album: nil }
     service.albums.each do |last_fm_album|
-      distance = Levenshtein.distance(album.title, last_fm_album.name)
+      artist_distance = Levenshtein.distance(album.artist.name, last_fm_album.artist)
+      album_distance = Levenshtein.distance(album.title, last_fm_album.name)
+      distance = artist_distance + album_distance
       found = { distance: distance, album: last_fm_album } if distance < found[:distance]
     end
     return unless found[:album]
@@ -21,5 +23,7 @@ class FindLastFmAlbumJob < ApplicationJob
       last_fm_url: found[:album].url,
       last_fm_image: found[:album].images["large"]
     )
+
+    FindLastFmTracksJob.perform_later(album: album)
   end
 end

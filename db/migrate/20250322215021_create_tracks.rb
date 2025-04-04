@@ -6,6 +6,8 @@ class CreateTracks < ActiveRecord::Migration[7.1]
       t.string :path, null: false
       t.string :file_title, null: false
       t.integer :file_format, null: false, default: 0
+      t.integer :duration
+      t.integer :position
 
       t.timestamps
     end
