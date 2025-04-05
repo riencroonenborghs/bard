@@ -7,3 +7,4 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "amplitudejs" # @5.3.2
 pin "bardAmplitude"
+pin "howler" # @2.2.4

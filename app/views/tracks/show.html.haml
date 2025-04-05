@@ -7,31 +7,33 @@
   .sticky.bottom-0.w-full.bg-gray-700
     :javascript
       setTimeout(() => {
-        const data = { name: "#{@track.title || @track.file_title}", artist: "#{@track.album.artist.name}",  album: "#{@track.album.title}", url: "#{stream_track_url(@track)}" };
+        const data = {
+          name: "#{@track.title || @track.file_title}",
+          artist: "#{@track.album.artist.name}",
+          album: "#{@track.album.title}",
+          duration: "#{@track.duration}",
+          url: "#{stream_track_url(@track)}"
+        };
         const event = new CustomEvent("playSong", { detail: data });
         document.dispatchEvent(event);
       }, 500)
 
-    
-    .flex.flex-col
-      %progress#song-played-progress.amplitude-song-played-progress.w-full.bg-gray-700
-      .flex.flex-row.p-3
+    .flex.flex-col.bardplayer
+      - if @track.duration
+        %progress.bardplayer-progress.w-full.bg-gray-700
+      .flex.flex-row.p-3.pt-6.pb-6
         .flex.flex-row.items-center.w-128
-          .amplitude-play-pause
-            play / pause
-          -# .amplitude-pause
-          -#   = render IconComponent.new(name: :pause, size: 4)
-          -# .amplitude-play
-          -#   = render IconComponent.new(name: :play, size: 4)
-          .flex.flex-row.font-thin.ms-4
-            %span.current-time
-              %span.amplitude-current-minutes
-              \:
-              %span.amplitude-current-seconds
-            -# %span.duration
-            -#   %span.amplitude-duration-minutes
-            -#   \:
-            -#   %span.amplitude-duration-seconds
+          .bardplayer-contoller--pause.cursor-pointer
+            = render IconComponent.new(name: :pause, size: 4)
+          .bardplayer-contoller--play.hidden.cursor-pointer
+            = render IconComponent.new(name: :play, size: 4)
+          - if @track.duration
+            .flex.flex-row.font-thin.ms-4
+              .bardplayer-duration
+                %span.bardplayer-duration--minutes 00:00
+                \:
+                %span.bardplayer-duration--seconds
+                  = @track.duration_mm_ss
         .flex.flex-row
           - if @track.album.last_fm_image.present?
             = image_tag @track.album.last_fm_image, class: "rounded-lg", width: 48

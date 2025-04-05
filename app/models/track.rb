@@ -59,4 +59,10 @@ class Track < ApplicationRecord
   def content_type
     CONTENT_TYPES[file_format]
   end
+
+  def duration_mm_ss
+    seconds = duration.dup
+    seconds = seconds % 60 if (minutes = duration / 60).positive?
+    "#{minutes.to_s.rjust(2, "0")}:#{seconds.to_s.rjust(2, "0")}"
+  end
 end
