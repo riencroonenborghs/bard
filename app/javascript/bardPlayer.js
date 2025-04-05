@@ -186,7 +186,7 @@ class BardUI {
 
       this.progressbar.value = pct;
       this.bardPlayer.seek(pct);
-      this.elapsed = this.bardPlayer.getCurrentSong().duration * pct;
+      this.elapsed = Math.floor(this.bardPlayer.getCurrentSong().duration * pct);
     }
   }
 }
