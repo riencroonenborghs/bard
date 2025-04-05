@@ -1,24 +1,17 @@
-# README
+# Bard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Music player for your local network. Don't expect much.
 
-Things you may want to cover:
+# Tech
 
-* Ruby version
+- Ruby on Rails
+- Sidekiq for processing files
+- howl.js for playing files
+- Last.fm for music info
 
-* System dependencies
+![screenshot](./screenshots/01.png "Screenshot")
 
-* Configuration
+# TODO
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- playlists
+- TurboRails URL updates
