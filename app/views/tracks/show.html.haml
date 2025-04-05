@@ -14,14 +14,15 @@
 
     
     .flex.flex-col
-      #player-progress-bar-container
-        %progress#song-played-progress.amplitude-song-played-progress.w-full.bg-gray-700
-      .flex.flex-row.justify-between.p-3
-        .flex.flex-row.items-center
-          .amplitude-pause
-            = render IconComponent.new(name: :pause, size: 4)
-          .amplitude-play
-            = render IconComponent.new(name: :play, size: 4)
+      %progress#song-played-progress.amplitude-song-played-progress.w-full.bg-gray-700
+      .flex.flex-row.p-3
+        .flex.flex-row.items-center.w-128
+          .amplitude-play-pause
+            play / pause
+          -# .amplitude-pause
+          -#   = render IconComponent.new(name: :pause, size: 4)
+          -# .amplitude-play
+          -#   = render IconComponent.new(name: :play, size: 4)
           .flex.flex-row.font-thin.ms-4
             %span.current-time
               %span.amplitude-current-minutes
@@ -40,27 +41,8 @@
             .font-bold.text-md
               = @track.title || @track.file_title
             .font-thin.text-sm
-              = @track.album.title
+              = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content" do
+                = @track.album.artist.name
               &mdash;
-              = @track.album.artist.name
-
-      -#   .time-container
-      -#     %span.current-time
-      -#       %span.amplitude-current-minutes
-      -#       \:
-      -#       %span.amplitude-current-seconds
-      -#     %span.duration
-      -#       %span.amplitude-duration-minutes
-      -#       \:
-      -#       %span.amplitude-duration-seconds
-          
-      -# .control-container
-      -#   .flex.flex-row
-      -#     .amplitude-pause
-      -#       = render IconComponent.new(name: :pause, size: 6)
-      -#     .amplitude-play
-      -#       = render IconComponent.new(name: :play, size: 6)
-      -#   .meta-container
-      -#     %span.song-name(data-amplitude-song-info="name")
-      -#     %span(data-amplitude-song-info="artist")
-              
+              = link_to album_path(@track.album), "data-turbo-frame" => "content" do
+                = @track.album.title
