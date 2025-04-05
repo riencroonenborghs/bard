@@ -1,6 +1,6 @@
 import { Howl, Howler } from "howler"
 
-const bardDebug = false;
+const bardDebug = true;
 
 class BardPlaylist {
   constructor() {
@@ -95,6 +95,17 @@ class BardPlayer {
       this.currentSong.howl.play();
     }
   }
+
+  seek(pct) {
+    this._debug(`seek song to ${pct}%`)
+    if(this.currentSong !== undefined &&
+      this.currentSong.howl !== undefined &&      
+      this.currentSong.duration != "") {
+      const skipTo = this.currentSong.duration * pct;
+      this._debug(`seek song to ${pct}% = ${skipTo}`)
+      this.currentSong.howl.seek(skipTo);
+    }
+  }
 }
 
 class BardUI {
@@ -119,10 +130,14 @@ class BardUI {
     this._debug("adding event listeners");
     this.pauseButton.addEventListener("click", () => { this._pause(); });
     this.playButton.addEventListener("click", () => { this._resume(); });
+    if(this.progressbar !== undefined) {
+      this.progressbar.addEventListener("click", (event) => { this._seek(event); });
+    }
   }
 
   _trackElapsed() {
     this.interval = setInterval(() => {
+      // console.log(this.bardPlayer.getCurrentSong().howl.seek())
       // timer
       if (this.elapsedElt !== undefined && !this.elapsedPaused) {
         this.elapsed += 1;
@@ -159,6 +174,20 @@ class BardUI {
     this.pauseButton.classList.remove("hidden");
     this.playButton.classList.add("hidden");
     this.elapsedPaused = false;
+  }
+
+  _seek(event) {
+    if (this.bardPlayer !== undefined &&
+        this.bardPlayer.getCurrentSong() != undefined &&
+        this.bardPlayer.getCurrentSong().duration !== "" &&
+        this.progressbar !== undefined) {
+      const rect = this.progressbar.getBoundingClientRect();
+      const pct = event.offsetX / rect.width;
+
+      this.progressbar.value = pct;
+      this.bardPlayer.seek(pct);
+      this.elapsed = this.bardPlayer.getCurrentSong().duration * pct;
+    }
   }
 }
 
