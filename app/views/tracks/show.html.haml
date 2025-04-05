@@ -12,15 +12,20 @@
           artist: "#{@track.album.artist.name}",
           album: "#{@track.album.title}",
           duration: "#{@track.duration}",
+          fileFormat: "#{@track.file_format}",
           url: "#{stream_track_url(@track)}"
         };
-        const event = new CustomEvent("playSong", { detail: data });
-        document.dispatchEvent(event);
+        const clearEvent = new CustomEvent("clearPlaylist");
+        document.dispatchEvent(clearEvent);
+        const addEvent = new CustomEvent("addSong", { detail: data });
+        document.dispatchEvent(addEvent);
+        const playEvent = new CustomEvent("playLastAddedSong");
+        document.dispatchEvent(playEvent);
       }, 500)
 
     .flex.flex-col.bardplayer
       - if @track.duration
-        %progress.bardplayer-progress.w-full.bg-gray-700
+        %progress.bardplayer-progressbar.w-full.bg-gray-700
       .flex.flex-row.p-3.pt-6.pb-6
         .flex.flex-row.items-center.w-128
           .bardplayer-contoller--pause.cursor-pointer
@@ -30,9 +35,9 @@
           - if @track.duration
             .flex.flex-row.font-thin.ms-4
               .bardplayer-duration
-                %span.bardplayer-duration--minutes 00:00
+                %span.bardplayer-duration--elapsed 00:00
                 \:
-                %span.bardplayer-duration--seconds
+                %span.bardplayer-duration--total
                   = @track.duration_mm_ss
         .flex.flex-row
           - if @track.album.last_fm_image.present?
