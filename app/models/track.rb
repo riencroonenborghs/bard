@@ -61,6 +61,8 @@ class Track < ApplicationRecord
   end
 
   def duration_mm_ss
+    return "00:00" unless duration
+
     seconds = duration.dup
     seconds = seconds % 60 if (minutes = duration / 60).positive?
     "#{minutes.to_s.rjust(2, "0")}:#{seconds.to_s.rjust(2, "0")}"

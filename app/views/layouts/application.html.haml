@@ -51,11 +51,12 @@
 
       .sticky.bottom-0.w-full.bg-gray-700(data-controller="player")
         .flex.flex-col
-          .border-t.border-gray-500.hidden.flex.flex-row.justify-end.p-2(data-player-target="playlist" style="max-height: 250px")
-            .flex.flex-col.overflow-scroll(data-player-target="playlistItems")
+          .border-t.border-gray-500.hidden.flex.flex-row.justify-end.p-2(data-player-target="playlistUI" style="max-height: 350px")
+            .flex.flex-col
               .pb-2.font-bold.text-3xl Playlist
+              .overflow-scroll(data-player-target="playlistItems")
 
-          %progress.w-full.bg-gray-700
+          %progress.w-full.bg-gray-700(data-player-target="progressbar")
           .flex.flex-row.p-3.pt-6.pb-6.justify-between.items-center
             .flex.flex-row.items-center
               .cursor-pointer(data-action="click->player#pause" data-player-target="pauseButton")
@@ -63,21 +64,21 @@
               .hidden.cursor-pointer(data-action="click->player#play" data-player-target="playButton")
                 = render IconComponent.new(name: :play, size: 4)
               .flex.flex-row.font-thin.ms-4
-                %span 00:00
+                %span(data-player-target="currentTrackElapsed") 00:00
                 .ms-1.me-1 &mdash;
-                %span 00:00
+                %span(data-player-target="currentTrackDuration") 00:00
             .flex.flex-row
               .bardplayer--cover-image
               .bardplayer--cover-icon
                 = render IconComponent.new(name: :album, size: 6)
               .ms-4.flex.flex-col
-                .font-bold.text-md
+                .font-bold.text-md(data-player-target="currentTrackTitle")
                   TITLE
                 .font-thin.text-sm
-                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-artist" do
+                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-artist", "data-player-target" => "currentTrackArtist" do
                     ARTIST
                   &mdash;
-                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-album" do
+                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-album", "data-player-target" => "currentTrackAlbum" do
                     ALBUM
             %div
               .flex.flex-row.items-center.hidden(data-player-target="playlistButtons")

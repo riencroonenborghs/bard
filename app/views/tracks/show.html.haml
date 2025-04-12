@@ -27,7 +27,10 @@
       const data = {
         name: "#{@track.title || @track.file_title}",
         artist: "#{@track.album.artist.name}",
+        artistUrl: "#{artist_path(@track.album.artist)}",
         album: "#{@track.album.title}",
+        albumUrl: "#{album_path(@track.album)}",
+        durationMMSS: "#{@track.duration_mm_ss}",
         duration: "#{@track.duration}",
         fileFormat: "#{@track.file_format}",
         url: "#{stream_track_url(@track)}"
