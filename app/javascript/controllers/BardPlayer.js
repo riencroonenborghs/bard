@@ -1,4 +1,4 @@
-import BardDebug from "./BardDebug";
+import debugMessage from "./BardDebug";
 import { Howl, Howler } from "howler";
 
 class BardPlayer {
@@ -6,28 +6,25 @@ class BardPlayer {
     this.currentSong = undefined;
   }
 
-  _debug(message) { if(BardDebug) { console.info(message); } }
-
   getCurrentSong() { return this.currentSong; }
 
   stop() {
-    this._debug("stopping current song")
     if(this.isPlaying()) {
-      this._debug("stopping current song - is playing")
+      debugMessage("stopping current song - is playing")
       this.currentSong.howl.stop();
-      this._debug("stopping current song - stopped")
+      debugMessage("stopping current song - stopped")
       this.currentSong.howl = undefined;
-      this._debug("stopping current song - unset")
+      debugMessage("stopping current song - unset")
     }
   }
 
   play(song) {
     this.stop();
 
-    this._debug(`play song ${song.artist} - ${song.name}`)
+    debugMessage(`play song ${song.artist} - ${song.name}`)
     this.currentSong = song;
     if(this.currentSong.howl === undefined) {
-      this._debug(`play song ${song.artist} - ${song.name} - creating player`)
+      debugMessage(`play song ${song.artist} - ${song.name} - creating player`)
       this.currentSong.howl = new Howl({
         src: [`${song.url}.${song.fileFormat}`],
         html5: true,
@@ -39,22 +36,21 @@ class BardPlayer {
         // onseek: () => {},
       });
 
+      debugMessage(`play song ${song.artist} - ${song.name} - play`)
       this.currentSong.howl.play();
     }
   }
 
   pause() {
-    this._debug("pausing song")
     if(this.isPlaying()) {
-      this._debug(`pausing song ${this.currentSong.artist} - ${this.currentSong.name}`)
+      debugMessage(`pausing song ${this.currentSong.artist} - ${this.currentSong.name}`)
       this.currentSong.howl.pause();
     }
   }
 
   resume() {
-    this._debug("resuming song")
     if(this._isNotPlaying()) {
-      this._debug(`resuming song ${this.currentSong.artist} - ${this.currentSong.name}`)
+      debugMessage(`resuming song ${this.currentSong.artist} - ${this.currentSong.name}`)
       this.currentSong.howl.play();
     }
   }
@@ -70,12 +66,12 @@ class BardPlayer {
   }
 
   seek(percentage) {
-    this._debug(`seek song to ${percentage}%`)
+    debugMessage(`seek song to ${percentage}%`)
     if(this.currentSong !== undefined &&
       this.currentSong.howl !== undefined &&      
       this.currentSong.duration != "") {
       const skipTo = this.currentSong.duration * percentage;
-      this._debug(`seek song to ${percentage}% = ${skipTo}`)
+      debugMessage(`seek song to ${percentage}% => ${skipTo}`)
       this.currentSong.howl.seek(skipTo);
     }
   }

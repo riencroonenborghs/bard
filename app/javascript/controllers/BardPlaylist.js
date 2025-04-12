@@ -1,14 +1,12 @@
-import BardDebug from "./BardDebug";
+import debugMessage from "./BardDebug";
 
 class BardPlaylist {
   constructor() {
     this.list = [];
   }
 
-  _debug(message) { if(BardDebug) { console.info(message); } }
-
   clear() { 
-    this._debug("clearing playlist");
+    debugMessage("clearing playlist");
     this.list = [];
   }
 
@@ -17,13 +15,13 @@ class BardPlaylist {
   }
 
   add(song) {
-    this._debug(`adding song ${song.artist} - ${song.name}`);
+    debugMessage(`add song ${song.artist} - ${song.name}`);
     const found = this.list.find((item) => item.url === song.url);
     if(!found) { this.list.push(song); }
   }
 
   remove(index) {
-    this._debug(`removing song at ${index}`);
+    debugMessage(`remove song at ${index}`);
     this.list.splice(index, 1);
   }
 
