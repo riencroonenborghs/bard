@@ -1,13 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import BardPlaylist from "./BardPlaylist";
 import BardPlayer from "./BardPlayer";
-
-function ssToMMSS(ss) {
-  let seconds = ss;
-  let minutes = Math.floor(seconds / 60);
-  if (minutes > 0) { seconds = seconds % 60; }
-  return `${new String(minutes).padStart(2, "0")}:${new String(seconds).padStart(2, "0")}`;
-}
+import secondsToMMSS from "./BardUtils";
 
 export default class extends Controller {
   static targets = [
@@ -43,6 +37,18 @@ export default class extends Controller {
 
     this.playingElapsed = 0;
     this.playingInterval = undefined;
+  }
+
+  showPlaylist (_event) {
+    this.showPlaylistButtonTarget.classList.add("hidden");
+    this.hidePlaylistButtonTarget.classList.remove("hidden");
+    this.playlistUITarget.classList.remove("hidden");
+  }
+
+  hidePlaylist (_event) {
+    this.showPlaylistButtonTarget.classList.remove("hidden");
+    this.hidePlaylistButtonTarget.classList.add("hidden");
+    this.playlistUITarget.classList.add("hidden");
   }
 
   pause (_event) {
@@ -84,7 +90,7 @@ export default class extends Controller {
       // elapsed time
       if (this.player.isPlaying()) {
         this.playingElapsed += 1;
-        this.currentTrackElapsedTarget.innerHTML = ssToMMSS(this.playingElapsed);
+        this.currentTrackElapsedTarget.innerHTML = secondsToMMSS(this.playingElapsed);
       }
       // progressbar
       if (track.duration !== "") {
@@ -107,17 +113,5 @@ export default class extends Controller {
     if(this.playingInterval !== undefined) { clearInterval(this.playingInterval); }
     this.currentTrackElapsedTarget.innerHTML = "00:00";
     this.progressbarTarget.value = 0;
-  }
-
-  showPlaylist (_event) {
-    this.showPlaylistButtonTarget.classList.add("hidden");
-    this.hidePlaylistButtonTarget.classList.remove("hidden");
-    this.playlistUITarget.classList.remove("hidden");
-  }
-
-  hidePlaylist (_event) {
-    this.showPlaylistButtonTarget.classList.remove("hidden");
-    this.hidePlaylistButtonTarget.classList.add("hidden");
-    this.playlistUITarget.classList.add("hidden");
   }
 }
