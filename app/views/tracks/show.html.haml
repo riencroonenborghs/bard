@@ -4,52 +4,38 @@
   = @track.file_title
 
 = turbo_frame_tag "player" do
-  .sticky.bottom-0.w-full.bg-gray-700
-    :javascript
-      setTimeout(() => {
-        const data = {
-          name: "#{@track.title || @track.file_title}",
-          artist: "#{@track.album.artist.name}",
-          album: "#{@track.album.title}",
-          duration: "#{@track.duration}",
-          fileFormat: "#{@track.file_format}",
-          url: "#{stream_track_url(@track)}"
-        };
-        const clearEvent = new CustomEvent("clearPlaylist");
-        document.dispatchEvent(clearEvent);
-        const addEvent = new CustomEvent("addSong", { detail: data });
-        document.dispatchEvent(addEvent);
-        const playEvent = new CustomEvent("playLastAddedSong");
-        document.dispatchEvent(playEvent);
-      }, 500)
+  .playlist-item.hidden.w-144.flex.flex-row.items-center.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+    .w-8.playlist-position
+    .w-16.pe-4
+      - if @track.album.last_fm_image.present?
+        = image_tag @track.album.last_fm_image, class: "rounded-lg"
+      - else
+        = render IconComponent.new(name: :album, size: 4)
+    .flex.flex-col.w-full
+      = link_to track_path(@track), "data-turbo-frame" => "player" do
+        = @track.title || @track.file_title
+      .font-thin.text-sm.flex.flex-row
+        = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content", class: "playlist-artist" do
+          = @track.album.artist.name
+        .ms-1.me-1 &mdash;
+        = link_to album_path(@track.album), "data-turbo-frame" => "content", class: "playlist--album" do
+          = @track.album.title
 
-    .flex.flex-col.bardplayer
-      - if @track.duration
-        %progress.bardplayer-progressbar.w-full.bg-gray-700
-      .flex.flex-row.p-3.pt-6.pb-6
-        .flex.flex-row.items-center.w-128
-          .bardplayer-contoller--pause.cursor-pointer
-            = render IconComponent.new(name: :pause, size: 4)
-          .bardplayer-contoller--play.hidden.cursor-pointer
-            = render IconComponent.new(name: :play, size: 4)
-          - if @track.duration
-            .flex.flex-row.font-thin.ms-4
-              .bardplayer-duration
-                %span.bardplayer-duration--elapsed 00:00
-                \:
-                %span.bardplayer-duration--total
-                  = @track.duration_mm_ss
-        .flex.flex-row
-          - if @track.album.last_fm_image.present?
-            = image_tag @track.album.last_fm_image, class: "rounded-lg", width: 48
-          - else
-            = render IconComponent.new(name: :album, size: 6)
-          .ms-4.flex.flex-col
-            .font-bold.text-md
-              = @track.title || @track.file_title
-            .font-thin.text-sm
-              = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content" do
-                = @track.album.artist.name
-              &mdash;
-              = link_to album_path(@track.album), "data-turbo-frame" => "content" do
-                = @track.album.title
+  -# .sticky.bottom-0.w-full.bg-gray-700
+  :javascript
+    setTimeout(() => {
+      const data = {
+        name: "#{@track.title || @track.file_title}",
+        artist: "#{@track.album.artist.name}",
+        album: "#{@track.album.title}",
+        duration: "#{@track.duration}",
+        fileFormat: "#{@track.file_format}",
+        url: "#{stream_track_url(@track)}"
+      };
+      // const clearEvent = new CustomEvent("clearPlaylist");
+      // document.dispatchEvent(clearEvent);
+      const addEvent = new CustomEvent("addToPlaylist", { detail: data });
+      document.dispatchEvent(addEvent);
+      // const playEvent = new CustomEvent("playLastAddedSong");
+      // document.dispatchEvent(playEvent);
+    }, 100)

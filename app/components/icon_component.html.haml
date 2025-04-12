@@ -9,8 +9,10 @@
     %path(stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5")
   - if @name == :stop
     %path(stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z")
-
-
+  - if @name == :chevron_up
+    %path(stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5")
+  - if @name == :chevron_down
+    %path(stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5")
   - if @name == :album
     %g(stroke="none" stroke-width="1" fill="none" fill-rule="evenodd")
       %g(fill-rule="nonzero")
