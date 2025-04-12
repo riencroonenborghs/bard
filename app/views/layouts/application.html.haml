@@ -56,7 +56,7 @@
               .pb-2.font-bold.text-3xl Playlist
               .overflow-scroll(data-player-target="playlistItems")
 
-          %progress.w-full.bg-gray-700(data-player-target="progressbar")
+          %progress.w-full.bg-gray-700.cursor-pointer(data-player-target="progressbar" data-action="click->player#seek")
           .flex.flex-row.p-3.pt-6.pb-6.justify-between.items-center
             .flex.flex-row.items-center
               .cursor-pointer(data-action="click->player#pause" data-player-target="pauseButton")

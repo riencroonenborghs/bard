@@ -35,6 +35,9 @@ export default class extends Controller {
 
     document.addEventListener("addToPlaylist", (event) => { 
       this._addToPlaylist(event);
+    });
+
+    document.addEventListener("play", (event) => { 
       this._playTrack(event.detail);
     });
 
@@ -52,6 +55,15 @@ export default class extends Controller {
     this.pauseButtonTarget.classList.remove("hidden");
     this.playButtonTarget.classList.add("hidden");
     this.player.resume();
+  }
+
+  seek (event) {
+    const rect = this.progressbarTarget.getBoundingClientRect();
+    const percentage = event.offsetX / rect.width;
+
+    this.progressbarTarget.value = percentage;
+    this.player.seek(percentage);
+    this.playingElapsed = Math.floor(this.player.getCurrentSong().duration * percentage);
   }
 
   _addToPlaylist (event) {

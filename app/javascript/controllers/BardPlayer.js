@@ -8,7 +8,7 @@ class BardPlayer {
 
   _debug(message) { if(BardDebug) { console.info(message); } }
 
-  // getCurrentSong() { return this.currentSong; }
+  getCurrentSong() { return this.currentSong; }
 
   stop() {
     this._debug("stopping current song")
@@ -69,16 +69,16 @@ class BardPlayer {
     return !this.isPlaying();
   }
 
-  // seek(pct) {
-  //   this._debug(`seek song to ${pct}%`)
-  //   if(this.currentSong !== undefined &&
-  //     this.currentSong.howl !== undefined &&      
-  //     this.currentSong.duration != "") {
-  //     const skipTo = this.currentSong.duration * pct;
-  //     this._debug(`seek song to ${pct}% = ${skipTo}`)
-  //     this.currentSong.howl.seek(skipTo);
-  //   }
-  // }
+  seek(percentage) {
+    this._debug(`seek song to ${percentage}%`)
+    if(this.currentSong !== undefined &&
+      this.currentSong.howl !== undefined &&      
+      this.currentSong.duration != "") {
+      const skipTo = this.currentSong.duration * percentage;
+      this._debug(`seek song to ${percentage}% = ${skipTo}`)
+      this.currentSong.howl.seek(skipTo);
+    }
+  }
 }
 
 export default BardPlayer;

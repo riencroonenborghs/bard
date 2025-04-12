@@ -37,7 +37,7 @@
       };
       // const clearEvent = new CustomEvent("clearPlaylist");
       // document.dispatchEvent(clearEvent);
-      const addEvent = new CustomEvent("addToPlaylist", { detail: data });
+      const addEvent = new CustomEvent("play", { detail: data });
       document.dispatchEvent(addEvent);
       // const playEvent = new CustomEvent("playLastAddedSong");
       // document.dispatchEvent(playEvent);
