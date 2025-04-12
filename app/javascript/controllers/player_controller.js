@@ -32,6 +32,7 @@ export default class extends Controller {
     });
 
     document.addEventListener("play", (event) => { 
+      this.playlist.clear();
       this._playTrack(event.detail);
     });
 

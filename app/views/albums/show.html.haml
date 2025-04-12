@@ -12,15 +12,18 @@
     .flex.flex-row.justify-between
       .flex.flex-col.w-full.pe-8
         - @album.tracks.ordered.each do |track|
-          = link_to track_path(track), "data-turbo-frame" => "player" do
-            .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
-              .flex.flex-row
-                .w-16
-                  = track.position
-                .w-full
-                  = track.title || track.file_title
-              %div
-                = track.file_format
+          .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+            .flex.flex-row
+              .w-16.flex.flex-row.justify-center.items-center
+                = link_to track_path(track), "data-turbo-frame" => "player" do
+                  = render IconComponent.new(name: :play, size: 4)
+              .w-16.flex.flex-row.justify-center.items-center
+                = link_to add_to_playlist_track_path(track), "data-turbo-frame" => "player" do
+                  = render IconComponent.new(name: :queue_list, size: 4)
+              .w-16.flex.flex-row.justify-center.items-center
+                = track.position
+              .flex.flex-row.justify-center.items-center
+                = track.title || track.file_title
 
       .w-192
         .flex.flex-col

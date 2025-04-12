@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
     member do
       get "stream" => "stream_tracks#show", as: :stream
+      get "add_to_playlist" => "playlist_tracks#show", as: :add_to_playlist
     end
   end
   

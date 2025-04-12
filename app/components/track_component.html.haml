@@ -1,17 +1,20 @@
 .flex.flex-row.items-center.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
   .w-full
-    = link_to track_path(@track), "data-turbo-frame" => "player" do
-      .flex.flex-row
-        .w-16
-          = @track.position
-        .w-full
-          = @track.title || @track.file_title
+    .flex.flex-row
+      .w-16.flex.flex-row.justify-center.items-center
+        = link_to track_path(@track), "data-turbo-frame" => "player" do
+          = render IconComponent.new(name: :play, size: 4)
+      .w-16.flex.flex-row.justify-center.items-center
+        = link_to add_to_playlist_track_path(@track), "data-turbo-frame" => "player" do
+          = render IconComponent.new(name: :queue_list, size: 4)
+      -# .w-16
+        -# = @track.position
+      .flex.flex-row.justify-center.items-center
+        = @track.title || @track.file_title
   - if @details
-    .w-128.text-sm.font-thin
+    .w-128.text-sm.font-thin.flex.flex-row.justify-center.items-center
       = link_to artist_path(@track.album.artist) do
         = @track.album.artist.name
-    .w-128.text-sm.font-thin
+    .w-128.text-sm.font-thin.flex.flex-row.justify-center.items-center
       = link_to album_path(@track.album) do
         = @track.album.title
-  .w-16
-    = @track.file_format
