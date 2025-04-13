@@ -28,6 +28,10 @@ class BardPlaylist {
   get(index) {
     return this.list[index];
   }
+
+  
 }
 
-export default BardPlaylist;
+const playlist = new BardPlaylist();
+
+export default playlist;

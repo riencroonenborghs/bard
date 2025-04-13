@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import BardPlaylist from "../bard/BardPlaylist";
+import playlist from "../bard/BardPlaylist";
 
 export default class extends Controller {
   static targets = [
@@ -12,16 +12,14 @@ export default class extends Controller {
   ];
 
   connect() {
-    this.playlist = new BardPlaylist();
-
     document.addEventListener("play", (event) => {
-      this.playlist.clear();
+      playlist.clear();
     })
 
     document.addEventListener("addToPlaylist", (event) => { 
       const playlistItem = document.getElementsByClassName("playlist-item")[0];
-      this.playlist.add(event.detail);
-      this.sizeTarget.innerHTML = this.playlist.size();
+      playlist.add(event.detail);
+      this.sizeTarget.innerHTML = playlist.size();
       this.buttonsTarget.classList.remove("hidden");
       this.itemsTarget.appendChild(playlistItem);
       playlistItem.classList.remove("hidden");

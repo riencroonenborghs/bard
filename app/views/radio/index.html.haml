@@ -1,0 +1,46 @@
+- content_for :meta_title do
+  \- #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
+
+
+.p-8
+  .text-4xl.text-gray-400
+    Tracks
+
+.p-8.pt-0
+  .text-2xl.uppercase.text-gray-400.pb-4
+    = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content" do
+      = @track.album.artist.name
+    &mdash;
+    = link_to album_path(@track.album), "data-turbo-frame" => "content" do
+      = @track.album.title
+  = @track.title || @track.file_title
+    
+.p-8.pt-0
+  - if @track.album.last_fm_image.present?
+    = image_tag @track.album.last_fm_image, class: "rounded-lg w-64"
+  - else
+    = render IconComponent.new(name: :album, size: 22)
+
+= turbo_frame_tag "player" do
+  %meta_title.hidden
+    #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
+
+  = render "/layouts/flash_messages"
+
+  :javascript
+    setTimeout(() => {
+      const data = {
+        name: "#{@track.title || @track.file_title}",
+        artist: "#{@track.album.artist.name}",
+        artistUrl: "#{artist_path(@track.album.artist)}",
+        album: "#{@track.album.title}",
+        albumUrl: "#{album_path(@track.album)}",
+        durationMMSS: "#{@track.duration_mm_ss}",
+        duration: "#{@track.duration}",
+        fileFormat: "#{@track.file_format}",
+        url: "#{stream_track_url(@track)}",
+        cover: "#{@track.album.last_fm_image}"
+      };
+      const addEvent = new CustomEvent("play", { detail: data });
+      document.dispatchEvent(addEvent);
+    }, 100);

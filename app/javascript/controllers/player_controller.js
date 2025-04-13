@@ -1,8 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 import BardPlayer from "../bard/BardPlayer";
+import playlist from "../bard/BardPlaylist";
 
 export default class extends Controller {
   static targets = [
+    "main",
     "pauseButton",
     "playButton",
     "progressbar"
@@ -13,32 +15,15 @@ export default class extends Controller {
 
     document.addEventListener("play", (event) => { 
       const track = event.detail;
-      this.player.play(track);
+      this.mainTarget.classList.remove("hidden")
+      this._playTrack(track);
+    });
 
-      this.pauseButtonTarget.classList.remove("hidden");
-      this.playButtonTarget.classList.add("hidden");
-
-      if (track.duration !== "") {
-        this.progressbarTarget.classList.remove("hidden");
-      } else {
-        this.progressbarTarget.classList.add("hidden");
+    document.addEventListener("startPlaylist", (_event) => {
+      const track = playlist.get(0);
+      if(track !== undefined) {
+        this._playTrack(track);
       }
-
-      this.elapsed = 0;
-      if(this.interval !== undefined) { clearInterval(this.interval); }
-      this.interval = setInterval(() => {
-        if (this.player.isPlaying()) {
-          this.elapsed += 1;
-
-          const tickEvent = new CustomEvent("tick", { detail: this.elapsed });
-          document.dispatchEvent(tickEvent);
-
-          if (track.duration !== "") {
-            this.progressbarTarget.value = (this.elapsed / parseFloat(track.duration));
-          }
-        }
-
-      }, 1000);
     });
   }
 
@@ -64,5 +49,34 @@ export default class extends Controller {
 
     const tickEvent = new CustomEvent("tick", { detail: this.elapsed });
     document.dispatchEvent(tickEvent);
+  }
+
+  _playTrack(track) {
+    this.player.play(track);
+
+    this.pauseButtonTarget.classList.remove("hidden");
+    this.playButtonTarget.classList.add("hidden");
+
+    if (track.duration !== "") {
+      this.progressbarTarget.classList.remove("hidden");
+    } else {
+      this.progressbarTarget.classList.add("hidden");
+    }
+
+    this.elapsed = 0;
+    if(this.interval !== undefined) { clearInterval(this.interval); }
+    this.interval = setInterval(() => {
+      if (this.player.isPlaying()) {
+        this.elapsed += 1;
+
+        const tickEvent = new CustomEvent("tick", { detail: this.elapsed });
+        document.dispatchEvent(tickEvent);
+
+        if (track.duration !== "") {
+          this.progressbarTarget.value = (this.elapsed / parseFloat(track.duration));
+        }
+      }
+
+    }, 1000);
   }
 }
