@@ -1,58 +1,36 @@
 import { Controller } from "@hotwired/stimulus"
-import BardPlaylist from "./BardPlaylist";
 import BardPlayer from "./BardPlayer";
-import secondsToMMSS from "./BardUtils";
 
 export default class extends Controller {
   static targets = [
     "pauseButton",
     "playButton",
-    "progressbar",
-    // current track
-    "currentTrackTitle",
-    "currentTrackArtist",
-    "currentTrackAlbum",
-    "currentTrackDuration",
-    "currentTrackElapsed",
-    "currentTrackCoverImage",
-    "currentTrackCoverImageImg",
-    "currentTrackCoverIcon",
-    // playlist
-    "playlistSize",
-    "showPlaylistButton",
-    "hidePlaylistButton",
-    "playlistUI",
-    "playlistItems",
-    "playlistButtons"
+    "progressbar"
   ];
 
   connect() {
     this.player = new BardPlayer();
-    this.playlist = new BardPlaylist();
-
-    document.addEventListener("addToPlaylist", (event) => { 
-      this._addToPlaylist(event);
-    });
 
     document.addEventListener("play", (event) => { 
-      this.playlist.clear();
-      this._playTrack(event.detail);
+      const track = event.detail;
+      this.player.play(track);
+
+      this.elapsed = 0;
+      if(this.interval !== undefined) { clearInterval(this.interval); }
+      this.interval = setInterval(() => {
+        if (this.player.isPlaying()) {
+          this.elapsed += 1;
+
+          const tickEvent = new CustomEvent("tick", { detail: this.elapsed });
+          document.dispatchEvent(tickEvent);
+
+          if (track.duration !== "") {
+            this.progressbarTarget.value = (this.elapsed / parseFloat(track.duration));
+          }
+        }
+
+      }, 1000);
     });
-
-    this.playingElapsed = 0;
-    this.playingInterval = undefined;
-  }
-
-  showPlaylist (_event) {
-    this.showPlaylistButtonTarget.classList.add("hidden");
-    this.hidePlaylistButtonTarget.classList.remove("hidden");
-    this.playlistUITarget.classList.remove("hidden");
-  }
-
-  hidePlaylist (_event) {
-    this.showPlaylistButtonTarget.classList.remove("hidden");
-    this.hidePlaylistButtonTarget.classList.add("hidden");
-    this.playlistUITarget.classList.add("hidden");
   }
 
   pause (_event) {
@@ -73,58 +51,9 @@ export default class extends Controller {
 
     this.progressbarTarget.value = percentage;
     this.player.seek(percentage);
-    this.playingElapsed = Math.floor(this.player.getCurrentSong().duration * percentage);
-  }
+    this.elapsed = Math.floor(this.player.getCurrentSong().duration * percentage);
 
-  _addToPlaylist (event) {
-    const playlistItem = document.getElementsByClassName("playlist-item")[0];
-    this.playlist.add(event.detail);
-    this.playlistSizeTarget.innerHTML = this.playlist.size();
-    this.playlistButtonsTarget.classList.remove("hidden");
-    this.playlistItemsTarget.appendChild(playlistItem);
-    playlistItem.classList.remove("hidden");
-  }
-
-  _playTrack(track) {
-    this._updateCurrentTrack(track);
-    this._resetPlayingUI();    
-
-    this.player.play(track);
-    this.playingInterval = setInterval(() => {
-      // elapsed time
-      if (this.player.isPlaying()) {
-        this.playingElapsed += 1;
-        this.currentTrackElapsedTarget.innerHTML = secondsToMMSS(this.playingElapsed);
-      }
-      // progressbar
-      if (track.duration !== "") {
-        this.progressbarTarget.value = (this.playingElapsed / parseFloat(track.duration));
-      }
-    }, 1000);
-  }
-
-  _updateCurrentTrack(track) {
-    this.currentTrackTitleTarget.innerHTML = track.name;
-    this.currentTrackArtistTarget.innerHTML = track.artist;
-    this.currentTrackAlbumTarget.innerHTML = track.album;
-    this.currentTrackDurationTarget.innerHTML = track.durationMMSS;
-    this.currentTrackArtistTarget.setAttribute("href", track.artistUrl);
-    this.currentTrackAlbumTarget.setAttribute("href", track.albumUrl);
-
-    if(track.cover !== "") {
-      this.currentTrackCoverImageTarget.classList.remove("hidden");
-      this.currentTrackCoverIconTarget.classList.add("hidden");
-      this.currentTrackCoverImageImgTarget.setAttribute("src", track.cover);
-    } else {
-      this.currentTrackCoverImageTarget.classList.add("hidden");
-      this.currentTrackCoverIconTarget.classList.remove("hidden");
-    }
-  }
-
-  _resetPlayingUI() {
-    this.playingElapsed = 0;
-    if(this.playingInterval !== undefined) { clearInterval(this.playingInterval); }
-    this.currentTrackElapsedTarget.innerHTML = "00:00";
-    this.progressbarTarget.value = 0;
+    const tickEvent = new CustomEvent("tick", { detail: this.elapsed });
+    document.dispatchEvent(tickEvent);
   }
 }
