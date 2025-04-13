@@ -3,6 +3,7 @@
   %head
     %title
       Bard
+      = yield :meta_title
     %meta(name="viewport" content="width=device-width, initial-scale=1")
     %meta(name="turbo-prefetch" content="false")
     = csrf_meta_tags
@@ -67,8 +68,9 @@
                 .ms-1.me-1 &mdash;
                 %span(data-player-target="currentTrackDuration") 00:00
             .flex.flex-row
-              .bardplayer--cover-image
-              .bardplayer--cover-icon
+              .bardplayer--cover-image(data-player-target="currentTrackCoverImage")
+                %img.rounded-lg(width="48px" height="48px" data-player-target="currentTrackCoverImageImg")
+              .bardplayer--cover-icon(data-player-target="currentTrackCoverIcon")
                 = render IconComponent.new(name: :album, size: 6)
               .ms-4.flex.flex-col
                 .font-bold.text-md(data-player-target="currentTrackTitle")

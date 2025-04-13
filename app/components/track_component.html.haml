@@ -7,8 +7,6 @@
       .w-16.flex.flex-row.justify-center.items-center
         = link_to add_to_playlist_track_path(@track), "data-turbo-frame" => "player" do
           = render IconComponent.new(name: :queue_list, size: 4)
-      -# .w-16
-        -# = @track.position
       .flex.flex-row.justify-center.items-center
         = @track.title || @track.file_title
   - if @details

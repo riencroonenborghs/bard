@@ -14,6 +14,9 @@ export default class extends Controller {
     "currentTrackAlbum",
     "currentTrackDuration",
     "currentTrackElapsed",
+    "currentTrackCoverImage",
+    "currentTrackCoverImageImg",
+    "currentTrackCoverIcon",
     // playlist
     "playlistSize",
     "showPlaylistButton",
@@ -107,6 +110,15 @@ export default class extends Controller {
     this.currentTrackDurationTarget.innerHTML = track.durationMMSS;
     this.currentTrackArtistTarget.setAttribute("href", track.artistUrl);
     this.currentTrackAlbumTarget.setAttribute("href", track.albumUrl);
+
+    if(track.cover !== "") {
+      this.currentTrackCoverImageTarget.classList.remove("hidden");
+      this.currentTrackCoverIconTarget.classList.add("hidden");
+      this.currentTrackCoverImageImgTarget.setAttribute("src", track.cover);
+    } else {
+      this.currentTrackCoverImageTarget.classList.add("hidden");
+      this.currentTrackCoverIconTarget.classList.remove("hidden");
+    }
   }
 
   _resetPlayingUI() {

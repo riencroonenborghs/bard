@@ -5,7 +5,7 @@
         .rounded-lg.shadow-sm.bg-gray-600.w-32
           .flex.flex-row.justify-center.p-2
             - if @artist.valid_image?
-              = image_tag @artist.last_fm_image
+              = image_tag @artist.last_fm_image, class: "rounded-lg"
             - else
               = render IconComponent.new(name: :artist, size: 12)
       .flex.flex-row.justify-center.pt-4
