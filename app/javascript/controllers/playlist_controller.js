@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import BardPlaylist from "./BardPlaylist";
+import BardPlaylist from "../bard/BardPlaylist";
 
 export default class extends Controller {
   static targets = [

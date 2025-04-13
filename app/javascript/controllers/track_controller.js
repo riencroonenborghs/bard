@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import player from "./BardPlayer";
-import secondsToMMSS from "./BardUtils";
+import secondsToMMSS from "../bard/BardUtils";
 
 export default class extends Controller {
   static targets = [
