@@ -1,7 +1,7 @@
-- content_for :meta_title do
-  \- '#{@filter}' Albums
-
 = turbo_frame_tag "content" do
+  %meta_title.hidden
+    '#{@filter}' Albums
+
   .p-8
     .text-4xl.uppercase.text-gray-400
       = link_to albums_path do

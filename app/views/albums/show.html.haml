@@ -1,10 +1,7 @@
-- content_for :meta_title do
-  \- Artists
-  \- #{@album.artist.name}
-  \- Album
-  \- #{@album.title}
-
 = turbo_frame_tag "content" do
+  %meta_title.hidden
+    #{@album.title} (#{@album.artist.name})
+
   .p-8
     .text-4xl.uppercase.text-gray-400 Tracks
 
