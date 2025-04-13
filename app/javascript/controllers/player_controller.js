@@ -15,6 +15,9 @@ export default class extends Controller {
       const track = event.detail;
       this.player.play(track);
 
+      this.pauseButtonTarget.classList.remove("hidden");
+      this.playButtonTarget.classList.add("hidden");
+
       if (track.duration !== "") {
         this.progressbarTarget.classList.remove("hidden");
       } else {
