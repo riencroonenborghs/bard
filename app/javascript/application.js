@@ -6,7 +6,9 @@ import "controllers"
 document.addEventListener("turbo:click", (event) => {
   const url = event.detail.url;
   const pushState = { url: url };
-  window.history.pushState(pushState, "", url);
+  if(url.match(/add_to_playlist/) === null) {
+    window.history.pushState(pushState, "", url);
+  }
 })
 
 // Turborails does not update the browser's title when you click around.
