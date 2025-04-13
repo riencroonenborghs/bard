@@ -1,6 +1,8 @@
 = turbo_frame_tag "player" do
   .playlist-item.hidden.w-144.flex.flex-row.items-center.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
-    .w-8.playlist-position
+    .w-16.flex.flex-row.justify-center.items-center
+      = link_to track_path(@track), "data-turbo-frame" => "player" do
+        = render IconComponent.new(name: :play, size: 4)
     .w-16.pe-4
       - if @track.album.last_fm_image.present?
         = image_tag @track.album.last_fm_image, class: "rounded-lg"

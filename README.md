@@ -14,4 +14,3 @@ Music player for your local network. Don't expect much.
 # TODO
 
 - playlists
-- TurboRails URL updates
