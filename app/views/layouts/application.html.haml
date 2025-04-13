@@ -65,7 +65,7 @@
                 = render IconComponent.new(name: :play, size: 4)
               .flex.flex-row.font-thin.ms-4
                 %span(data-track-target="elapsed") 00:00
-                .ms-1.me-1 &mdash;
+                .ms-1.me-1(data-track-target="durationDash") &mdash;
                 %span(data-track-target="duration") 00:00
             .flex.flex-row
               .bardplayer--cover-image(data-track-target="coverImage")
@@ -76,10 +76,10 @@
                 .font-bold.text-md(data-track-target="title")
                   TITLE
                 .font-thin.text-sm
-                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-artist", "data-track-target" => "artist" do
+                  = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "artist" do
                     ARTIST
                   &mdash;
-                  = link_to "empty", "data-turbo-frame" => "content", class: "bardplayer--track-album", "data-track-target" => "album" do
+                  = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "album" do
                     ALBUM
             %div
               .flex.flex-row.items-center.hidden(data-playlist-target="buttons")

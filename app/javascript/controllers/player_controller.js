@@ -15,6 +15,12 @@ export default class extends Controller {
       const track = event.detail;
       this.player.play(track);
 
+      if (track.duration !== "") {
+        this.progressbarTarget.classList.remove("hidden");
+      } else {
+        this.progressbarTarget.classList.add("hidden");
+      }
+
       this.elapsed = 0;
       if(this.interval !== undefined) { clearInterval(this.interval); }
       this.interval = setInterval(() => {

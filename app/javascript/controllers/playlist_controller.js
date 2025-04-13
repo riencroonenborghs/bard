@@ -19,7 +19,6 @@ export default class extends Controller {
     })
 
     document.addEventListener("addToPlaylist", (event) => { 
-      console.log('qwe')
       const playlistItem = document.getElementsByClassName("playlist-item")[0];
       this.playlist.add(event.detail);
       this.sizeTarget.innerHTML = this.playlist.size();

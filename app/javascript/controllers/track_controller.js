@@ -7,15 +7,24 @@ export default class extends Controller {
     "artist",
     "album",
     "duration",
+    "durationDash",
     "elapsed",
     "coverImage",
     "coverImageElement",
-    "coverIcon",
+    "coverIcon"
   ];
 
   connect() {
     document.addEventListener("play", (event) => {
       this.elapsedTarget.innerHTML = "00:00";
+
+      if(event.detail.duration !== "") {
+        this.durationDashTarget.classList.remove("hidden");
+        this.durationTarget.classList.remove("hidden");
+      } else {
+        this.durationDashTarget.classList.add("hidden");
+        this.durationTarget.classList.add("hidden");
+      }
 
       this.titleTarget.innerHTML = event.detail.name;
       this.artistTarget.innerHTML = event.detail.artist;
