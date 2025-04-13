@@ -14,7 +14,7 @@
 
     = yield :head
 
-    %body.bg-gray-800.text-gray-300
+    %body.bg-gray-800.text-gray-300(data-controller="alerts")
       .flex.flex-row
         .w-64.bg-gray-600.text-white(style="height: calc(100vh)")
           .flex.flex-col
@@ -89,4 +89,4 @@
                 .hidden.cursor-pointer(data-action="click->playlist#hide" data-playlist-target="hideButtons")
                   = render IconComponent.new(name: :chevron_down, size: 4)
 
-    -# = render "/layouts/flash_messages"
+    = render "/layouts/flash_messages"

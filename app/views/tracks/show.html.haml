@@ -25,6 +25,8 @@
   %meta_title.hidden
     #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
 
+  = render "/layouts/flash_messages"
+
   :javascript
     setTimeout(() => {
       const data = {

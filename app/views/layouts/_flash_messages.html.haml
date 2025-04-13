@@ -1,4 +1,4 @@
-.absolute.bottom-0.right-px
+.absolute.top-0.right-px
   - if flash[:alert]
     .alert.p-2.bg-amber-300.text-amber-800.flex.justify-between.items-center.m-1
       .flex.items-center
@@ -6,8 +6,8 @@
           -# = render IconComponent.new(name: :exclamation_triangle)
         .me-2
           = flash[:alert]
-      = link_to "#", "data-action" => "click->alerts#dismiss" do
-        -# = render IconComponent.new(name: :close)
+      .cursor-pointer(data-action="click->alerts#dismiss")
+        = render IconComponent.new(name: :close, size: 2)
   - if flash[:notice]
     .alert.p-2.bg-lime-300.text-lime-800.flex.justify-between.items-center.m-1
       .flex.items-center
@@ -15,5 +15,5 @@
           -# = render IconComponent.new(name: :smiley_face)
         .me-2 
           = flash[:notice]
-      = link_to "#", "data-action" => "click->alerts#dismiss" do
-        -# = render IconComponent.new(name: :close)
+      .cursor-pointer(data-action="click->alerts#dismiss")
+        = render IconComponent.new(name: :close, size: 2)

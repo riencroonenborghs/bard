@@ -18,6 +18,8 @@
         = link_to album_path(@track.album), "data-turbo-frame" => "content", class: "playlist--album" do
           = @track.album.title
 
+  = render "/layouts/flash_messages"
+  
   :javascript
     setTimeout(() => {
       const data = {
