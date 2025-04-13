@@ -1,46 +1,98 @@
-- content_for :meta_title do
-  \- #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
-
-
-.p-8
-  .text-4xl.text-gray-400
-    Tracks
-
-.p-8.pt-0
-  .text-2xl.uppercase.text-gray-400.pb-4
-    = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content" do
-      = @track.album.artist.name
-    &mdash;
-    = link_to album_path(@track.album), "data-turbo-frame" => "content" do
-      = @track.album.title
-  = @track.title || @track.file_title
-    
-.p-8.pt-0
-  - if @track.album.last_fm_image.present?
-    = image_tag @track.album.last_fm_image, class: "rounded-lg w-64"
-  - else
-    = render IconComponent.new(name: :album, size: 22)
-
-= turbo_frame_tag "player" do
+= turbo_frame_tag "content" do
   %meta_title.hidden
-    #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
+    Radio
 
-  = render "/layouts/flash_messages"
+  .p-8
+    .text-4xl.uppercase.text-gray-400 Radio
 
-  :javascript
-    setTimeout(() => {
-      const data = {
-        name: "#{@track.title || @track.file_title}",
-        artist: "#{@track.album.artist.name}",
-        artistUrl: "#{artist_path(@track.album.artist)}",
-        album: "#{@track.album.title}",
-        albumUrl: "#{album_path(@track.album)}",
-        durationMMSS: "#{@track.duration_mm_ss}",
-        duration: "#{@track.duration}",
-        fileFormat: "#{@track.file_format}",
-        url: "#{stream_track_url(@track)}",
-        cover: "#{@track.album.last_fm_image}"
-      };
-      const addEvent = new CustomEvent("play", { detail: data });
-      document.dispatchEvent(addEvent);
-    }, 100);
+  .p-8
+    .flex.flex-row.justify-between
+      .flex.flex-col.w-full.pe-8
+        - @tracks.each do |track|
+          .flex.flex-row.justify-between.border-b.border-gray-700.p-3(class="hover:bg-gray-900")
+            .flex.flex-row
+              .w-16.flex.flex-row.justify-center.items-center
+                = link_to track_path(track), "data-turbo-frame" => "player" do
+                  = render IconComponent.new(name: :play, size: 4)
+              .w-16.flex.flex-row.justify-center.items-center
+                = link_to add_to_playlist_track_path(track), "data-turbo-frame" => "player" do
+                  = render IconComponent.new(name: :queue_list, size: 4)
+              .w-16.flex.flex-row.justify-center.items-center
+                - if track.album.last_fm_image.present?
+                  = image_tag track.album.last_fm_image, class: "rounded-lg", width: "32px", height: "32px"
+                - else
+                  = render IconComponent.new(name: :album, size: 4)
+              .flex.flex-col
+                %div
+                  = track.title || track.file_title
+                .flex.flex-row.items-center
+                  .font-thin.text-sm.flex.flex-row
+                    = link_to artist_path(track.album.artist), "data-turbo-frame" => "content", class: "playlist-artist" do
+                      = track.album.artist.name
+                    .ms-1.me-1 &mdash;
+                    = link_to album_path(track.album), "data-turbo-frame" => "content", class: "playlist--album" do
+                      = track.album.title
+
+
+      -# .w-192
+      -#   .flex.flex-col
+      -#     .flex.flex-row.justify-center
+      -#       = render ArtistHeaderComponent.new(artist: @album.artist, size: :lg)
+      -#     .flex.flex-row.justify-center.text-xl
+      -#       = @album.title
+      -#     .flex.flex-row.justify-center.pt-4
+      -#       - if @album.last_fm_image.present?
+      -#         = image_tag @album.last_fm_image, class: "rounded-lg  w-xs"
+      -#       - else
+      -#         = render IconComponent.new(name: :album, size: 22)
+      -#     .flex.flex-row.justify-center.text-xs.pt-2.font-thin
+      -#       = @album.year
+
+
+
+-# - content_for :meta_title do
+-#   \- #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
+
+
+-# .p-8
+-#   .text-4xl.text-gray-400
+-#     Tracks
+
+-# .p-8.pt-0
+-#   .text-2xl.uppercase.text-gray-400.pb-4
+-#     = link_to artist_path(@track.album.artist), "data-turbo-frame" => "content" do
+-#       = @track.album.artist.name
+-#     &mdash;
+-#     = link_to album_path(@track.album), "data-turbo-frame" => "content" do
+-#       = @track.album.title
+-#   = @track.title || @track.file_title
+    
+-# .p-8.pt-0
+-#   - if @track.album.last_fm_image.present?
+-#     = image_tag @track.album.last_fm_image, class: "rounded-lg w-64"
+-#   - else
+-#     = render IconComponent.new(name: :album, size: 22)
+
+-# = turbo_frame_tag "player" do
+-#   %meta_title.hidden
+-#     #{@track.title || @track.file_title} - #{@track.album.title} (#{@track.album.artist.name})}
+
+-#   = render "/layouts/flash_messages"
+
+-#   :javascript
+-#     setTimeout(() => {
+-#       const data = {
+-#         name: "#{@track.title || @track.file_title}",
+-#         artist: "#{@track.album.artist.name}",
+-#         artistUrl: "#{artist_path(@track.album.artist)}",
+-#         album: "#{@track.album.title}",
+-#         albumUrl: "#{album_path(@track.album)}",
+-#         durationMMSS: "#{@track.duration_mm_ss}",
+-#         duration: "#{@track.duration}",
+-#         fileFormat: "#{@track.file_format}",
+-#         url: "#{stream_track_url(@track)}",
+-#         cover: "#{@track.album.last_fm_image}"
+-#       };
+-#       const addEvent = new CustomEvent("play", { detail: data });
+-#       document.dispatchEvent(addEvent);
+-#     }, 100);
