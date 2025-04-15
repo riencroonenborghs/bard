@@ -18,4 +18,5 @@ document.addEventListener("turbo:frame-render", (event) => {
       document.title = `Bard - ${title}`;
     }
   });
-});
+});import "@hotwired/turbo-rails"
+import "./controllers"

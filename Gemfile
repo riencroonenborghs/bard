@@ -41,3 +41,5 @@ group :development do
   gem "pry"
   gem "web-console"
 end
+
+gem "jsbundling-rails", "~> 1.3"
