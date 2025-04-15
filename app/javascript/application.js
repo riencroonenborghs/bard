@@ -1,3 +1,7 @@
+import "@hotwired/turbo-rails"
+import "./controllers"
+// import "./components/app"
+
 // Turborails does not update the browser's URL when you click around.
 document.addEventListener("turbo:click", (event) => {
   const url = event.detail.url;
@@ -18,5 +22,4 @@ document.addEventListener("turbo:frame-render", (event) => {
       document.title = `Bard - ${title}`;
     }
   });
-});import "@hotwired/turbo-rails"
-import "./controllers"
+});
