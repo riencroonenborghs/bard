@@ -26,19 +26,13 @@ function ArtistView() {
   
   return (
     <Fragment>
-      <div className="p-8 flex flex-row">
+      <div className="p-8">
         <div className="text-4xl text-gray-400 uppercase me-4">
-          Artist
-        </div>
-        <div className="text-4xl text-gray-400">
-          {artist.name}
+          {artist.name} - Albums
         </div>
       </div>
 
-      <div className="p-8 pt-0">
-        <div className="text-2xl uppercase text-gray-400 pb-4">
-            Albums
-        </div>
+      <div className="p-8">
         <div className="w-full grid grid-cols-4 gap-4">
           {albums.map((album) =>
             <Album key={album.id} album={album} artist={artist}></Album>

@@ -29,15 +29,21 @@ function AlbumView() {
       });
   }
 
+  const play = (track) => {
+    console.log("play");
+    console.log(track);
+  }
+
   const addToPlaylist = (track) => {
-    console.log(track)
+    console.log("addToPlaylist");
+    console.log(track);
   }
   
   return (
     <Fragment>
       <div className="p-8">
         <div className=" text-4xl uppercase text-gray-400">
-          Tracks
+          {album.title} - Tracks
         </div>
       </div>
 
@@ -48,12 +54,12 @@ function AlbumView() {
               <div key={track.id} className="flex flex-row justify-between border-b border-gray-700 p-3 hover:bg-gray-900">
                 <div className="flex flex-row">
                   <div className="w-16 flex flex-row justify-center items-center">
-                    <Link to={track.url}>
+                    <a className="cursor-pointer" onClick={() => play(track)}>
                       <PlayIcon size={4}></PlayIcon>
-                    </Link>
+                    </a>
                   </div>
                   <div className="w-16 flex flex-row justify-center items-center">
-                    <a onClick={() => addToPlaylist(track)}>
+                    <a className="cursor-pointer" onClick={() => addToPlaylist(track)}>
                       <QueueIcon size={4}></QueueIcon>
                     </a>
                   </div>
