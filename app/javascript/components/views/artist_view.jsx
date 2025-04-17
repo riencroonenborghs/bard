@@ -38,7 +38,7 @@ function ArtistView() {
         </div>
         <div className="w-full grid grid-cols-4 gap-4">
           {albums.map((album) =>
-            <Album key={album.id} album={album}></Album>
+            <Album key={album.id} album={album} artist={artist}></Album>
           )}
         </div>
       </div>

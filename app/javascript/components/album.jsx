@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 import AlbumIcon from "./icons/album_icon";
+import ArtistHeader from "./artist_header";
 
 function Album(props) {  
   return (
@@ -9,7 +10,7 @@ function Album(props) {
       <div className="flex flex-col">
         <div className="flex flex-row justify-center">
           <div className="font-thin break-all overflow-auto">
-            = render ArtistHeaderComponent.new(artist: @album.artist)
+            <ArtistHeader artist={props.artist}></ArtistHeader>
           </div>
         </div>
         <Link to={props.album.url}>
