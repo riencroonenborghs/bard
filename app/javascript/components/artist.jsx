@@ -11,10 +11,10 @@ function Artist(props) {
           <div className="flex flex-row justify-center">
             <div className="rounded-lg shadow-sm bg-gray-600 w-32">
               <div className=" flex flex-row justify-center p-2">
-                {props.artist.coverUrl &&
-                  <img src={props.artist.coverUrl} className="rounded-lg" />
+                {props.artist.cover_url &&
+                  <img src={props.artist.cover_url} className="rounded-lg" />
                 }
-                {!props.artist.coverUrl &&
+                {!props.artist.cover_url &&
                   <ArtistIcon size={12}></ArtistIcon>
                 }
               </div>
