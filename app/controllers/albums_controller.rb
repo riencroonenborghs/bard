@@ -17,5 +17,12 @@ class AlbumsController < ApplicationController
 
   def show
     @album = Album.includes(:artist, :tracks).find(params[:id])
+
+    respond_to do |format|
+      format.json {
+        render json: { data: AlbumJsonRenderer.render(album: @album, artist: true, tracks: true).json } 
+      }
+      format.html { render nothing: true }
+    end
   end
 end

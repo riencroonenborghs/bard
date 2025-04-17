@@ -3,9 +3,10 @@
 class AlbumJsonRenderer
   include BaseJsonRenderer
   
-  def initialize(album:, artist: false)
+  def initialize(album:, artist: false, tracks: false)
     @album = album
     @artist = artist
+    @tracks = tracks
   end
 
   def render
@@ -16,10 +17,13 @@ class AlbumJsonRenderer
       year: @album.year,
       cover_url: @album.last_fm_image.blank? ? nil : @album.last_fm_image
     }
-    return unless @artist
 
     @json.update(
       artist: ArtistJsonRenderer.render(artist: @album.artist).json
-    )
+    ) if @artist
+
+    @json.update(
+      tracks: TracksJsonRenderer.render(album: @album).json
+    ) if @tracks
   end
 end

@@ -26,7 +26,10 @@ function ArtistView() {
   
   return (
     <Fragment>
-      <div className="p-8">
+      <div className="p-8 flex flex-row">
+        <div className="text-4xl text-gray-400 uppercase me-4">
+          Artist
+        </div>
         <div className="text-4xl text-gray-400">
           {artist.name}
         </div>
