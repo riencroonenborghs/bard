@@ -1,6 +1,6 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
-// import "./components/app"
+import "./components/app"
 
 // Turborails does not update the browser's URL when you click around.
 document.addEventListener("turbo:click", (event) => {

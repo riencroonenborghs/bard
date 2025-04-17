@@ -13,84 +13,86 @@
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
     = yield :head
 
-    %body.bg-gray-800.text-gray-300(data-controller="alerts")
-      .flex.flex-row
-        .w-64.bg-gray-600.text-white(style="height: calc(100vh)")
-          .flex.flex-col
-            .flex.flex-row.w-full.justify-center.pt-8
-              = link_to root_path, "data-turbo-frame" => "content" do
-                .text-4xl.uppercase.text-gray-400.font-bold
-                  Bard
+    %body.bg-gray-800.text-gray-300
+      #bard-player
+    -# %body.bg-gray-800.text-gray-300(data-controller="alerts")
+      -# .flex.flex-row
+      -#   .w-64.bg-gray-600.text-white(style="height: calc(100vh)")
+      -#     .flex.flex-col
+      -#       .flex.flex-row.w-full.justify-center.pt-8
+      -#         = link_to root_path, "data-turbo-frame" => "content" do
+      -#           .text-4xl.uppercase.text-gray-400.font-bold
+      -#             Bard
             
-            .p-8
-              .text-lg.uppercase.text-gray-500 menu
+      -#       .p-8
+      -#         .text-lg.uppercase.text-gray-500 menu
 
-            = link_to artists_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
-              .flex.flex-row.justify-between.items-center
-                %div Artists
-                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
-                  = artist_count
+      -#       = link_to artists_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+      -#         .flex.flex-row.justify-between.items-center
+      -#           %div Artists
+      -#           .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+      -#             = artist_count
 
-            = link_to albums_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
-              .flex.flex-row.justify-between.items-center
-                %div Albums
-                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
-                  = album_count
+      -#       = link_to albums_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+      -#         .flex.flex-row.justify-between.items-center
+      -#           %div Albums
+      -#           .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+      -#             = album_count
 
-            = link_to tracks_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
-              .flex.flex-row.justify-between.items-center
-                %div Tracks
-                .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
-                  = track_count
+      -#       = link_to tracks_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+      -#         .flex.flex-row.justify-between.items-center
+      -#           %div Tracks
+      -#           .rounded-lg.shadow-sm.bg-gray-700.text-xs.p-1.font-thin
+      -#             = track_count
 
-            = link_to radio_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
-              .flex.flex-row.justify-between.items-center
-                %div Radio
-                = render IconComponent.new(name: :radio, size: 3)
-        .w-full.overflow-auto(style="height: calc(100vh);")
-          = turbo_frame_tag "content" do
-            = yield
+      -#       = link_to radio_path, "data-turbo-frame" => "content", class: "ps-8 pe-8 pt-2 pb-2" do
+      -#         .flex.flex-row.justify-between.items-center
+      -#           %div Radio
+      -#           = render IconComponent.new(name: :radio, size: 3)
+      -#   .w-full.overflow-auto(style="height: calc(100vh);")
+      -#     = turbo_frame_tag "content" do
+      -#       = yield
 
-      %turbo-frame#player
+      -# %turbo-frame#player
 
-      .sticky.bottom-0.w-full.bg-gray-700.hidden(data-controller="player playlist track" data-player-target="main")
-        .flex.flex-col
-          .border-t.border-gray-500.hidden.flex.flex-row.justify-end.p-2(data-playlist-target="playlist" style="max-height: 350px")
-            .flex.flex-col
-              .pb-2.font-bold.text-3xl Playlist
-              .overflow-scroll(data-playlist-target="items")
+    -#   .sticky.bottom-0.w-full.bg-gray-700.hidden(data-controller="player playlist track" data-player-target="main")
+    -#     .flex.flex-col
+    -#       .border-t.border-gray-500.hidden.flex.flex-row.justify-end.p-2(data-playlist-target="playlist" style="max-height: 350px")
+    -#         .flex.flex-col
+    -#           .pb-2.font-bold.text-3xl Playlist
+    -#           .overflow-scroll(data-playlist-target="items")
 
-          %progress.w-full.bg-gray-700.cursor-pointer(data-player-target="progressbar" data-action="click->player#seek")
-          .flex.flex-row.p-3.pt-6.pb-6.justify-between.items-center
-            .flex.flex-row.items-center
-              .cursor-pointer(data-action="click->player#pause" data-player-target="pauseButton")
-                = render IconComponent.new(name: :pause, size: 4)
-              .hidden.cursor-pointer(data-action="click->player#play" data-player-target="playButton")
-                = render IconComponent.new(name: :play, size: 4)
-              .flex.flex-row.font-thin.ms-4
-                %span(data-track-target="elapsed") 00:00
-                .ms-1.me-1(data-track-target="durationDash") &mdash;
-                %span(data-track-target="duration") 00:00
-            .flex.flex-row
-              .bardplayer--cover-image(data-track-target="coverImage")
-                %img.rounded-lg(width="48px" height="48px" data-track-target="coverImageElement")
-              .bardplayer--cover-icon(data-track-target="coverIcon")
-                = render IconComponent.new(name: :album, size: 6)
-              .ms-4.flex.flex-col
-                .font-bold.text-md(data-track-target="title")
-                  TITLE
-                .font-thin.text-sm
-                  = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "artist" do
-                    ARTIST
-                  &mdash;
-                  = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "album" do
-                    ALBUM
-            %div
-              .flex.flex-row.items-center.hidden(data-playlist-target="buttons")
-                .me-2.font-thin(data-playlist-target="size")
-                .cursor-pointer(data-action="click->playlist#show" data-playlist-target="showButtons")
-                  = render IconComponent.new(name: :chevron_up, size: 4)
-                .hidden.cursor-pointer(data-action="click->playlist#hide" data-playlist-target="hideButtons")
-                  = render IconComponent.new(name: :chevron_down, size: 4)
+    -#       %progress.w-full.bg-gray-700.cursor-pointer(data-player-target="progressbar" data-action="click->player#seek")
+    -#       .flex.flex-row.p-3.pt-6.pb-6.justify-between.items-center
+    -#         .flex.flex-row.items-center
+    -#           .cursor-pointer(data-action="click->player#pause" data-player-target="pauseButton")
+    -#             = render IconComponent.new(name: :pause, size: 4)
+    -#           .hidden.cursor-pointer(data-action="click->player#play" data-player-target="playButton")
+    -#             = render IconComponent.new(name: :play, size: 4)
+    -#           .flex.flex-row.font-thin.ms-4
+    -#             %span(data-track-target="elapsed") 00:00
+    -#             .ms-1.me-1(data-track-target="durationDash") &mdash;
+    -#             %span(data-track-target="duration") 00:00
+    -#         .flex.flex-row
+    -#           .bardplayer--cover-image(data-track-target="coverImage")
+    -#             %img.rounded-lg(width="48px" height="48px" data-track-target="coverImageElement")
+    -#           .bardplayer--cover-icon(data-track-target="coverIcon")
+    -#             = render IconComponent.new(name: :album, size: 6)
+    -#           .ms-4.flex.flex-col
+    -#             .font-bold.text-md(data-track-target="title")
+    -#               TITLE
+    -#             .font-thin.text-sm
+    -#               = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "artist" do
+    -#                 ARTIST
+    -#               &mdash;
+    -#               = link_to "empty", "data-turbo-frame" => "content", "data-track-target" => "album" do
+    -#                 ALBUM
+    -#         %div
+    -#           .flex.flex-row.items-center.hidden(data-playlist-target="buttons")
+    -#             .me-2.font-thin(data-playlist-target="size")
+    -#             .cursor-pointer(data-action="click->playlist#show" data-playlist-target="showButtons")
+    -#               = render IconComponent.new(name: :chevron_up, size: 4)
+    -#             .hidden.cursor-pointer(data-action="click->playlist#hide" data-playlist-target="hideButtons")
+    -#               = render IconComponent.new(name: :chevron_down, size: 4)
 
-    = render "/layouts/flash_messages"
+    -# = render "/layouts/flash_messages"
