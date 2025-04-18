@@ -23,40 +23,38 @@ function Player() {
 
   useEffect(() => {
     const listener = (event) => {
-      if (player !== null) {
-        player.stop();
-        setPlayer(null);
-        publish("reset")
+      if (event.detail !== null) {
+        if (player !== null) {
+          player.stop();
+          setPlayer(null);
+          publish("player-reset");
+        }
+  
+        setArtist(event.detail.artist); 
+        setAlbum(event.detail.album); 
+        setTrack(event.detail.track);
+        createPlayer(event.detail.track);
+      } else {
+        player.play();
       }
-
-      setArtist(event.detail.artist); 
-      setAlbum(event.detail.album); 
-      setTrack(event.detail.track);
-      createPlayer(event.detail.track);
     }
-    subscribe("play", listener);
-    return () => unsubscribe("play", listener)
+
+    subscribe("player-play", listener);
+    return () => unsubscribe("player-play", listener)
   });
 
   useEffect(() => {
     const listener = (_event) => { player.pause(); }
-    subscribe("pause", listener)
-    return () => unsubscribe("pause", listener)
+    subscribe("player-pause", listener)
+    return () => unsubscribe("player-pause", listener)
   });
-
-  useEffect(() => {
-    const listener = (_event) => { player.play(); }
-    subscribe("resume", listener)
-    return () => unsubscribe("resume", listener)
-  });
-
 
   useEffect(() => {
     const listener = (event) => {
       player.seek(event.detail.elapsed)
     }
-    subscribe("skip", listener)
-    return () => unsubscribe("skip", listener)
+    subscribe("player-seek", listener)
+    return () => unsubscribe("player-seek", listener)
   });
 
   return (

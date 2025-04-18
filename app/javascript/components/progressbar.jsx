@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { subscribe, publish } from "./utils/events";
+import { subscribe, unsubscribe, publish } from "./utils/events";
 
 function Progressbar(props) {
   const [value, setValue] = useState(0);
@@ -10,7 +10,7 @@ function Progressbar(props) {
     const percentage = event.nativeEvent.offsetX / rect.width;
     const elapsed = Math.floor(props.track.duration * percentage);
 
-    publish("skip", { elapsed: elapsed });
+    publish("player-seek", { elapsed: elapsed });
     setValue(percentage);
   }
 
@@ -18,8 +18,16 @@ function Progressbar(props) {
     const listener = (event) => {
       setValue(0);
     }
-    subscribe("reset", listener)
-    return () => unsubscribe("reset", listener)
+    subscribe("player-reset", listener)
+    return () => unsubscribe("player-reset", listener)
+  }, []);
+
+  useEffect(() => {
+    const listener = (event) => {
+      setValue(event.detail.percentage);
+    }
+    subscribe("player-progressbar-percentage", listener)
+    return () => unsubscribe("player-progressbar-percentage", listener)
   }, []);
 
   return (

@@ -9,12 +9,12 @@ function TrackButtons(props) {
 
   function pauseClicked () {
     setPlaying(!playing);
-    publish("pause");
+    publish("player-pause");
   }
 
   function playClicked () {
     setPlaying(!playing);
-    publish("resume");
+    publish("player-play");
   }
 
   return (

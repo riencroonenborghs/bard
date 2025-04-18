@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 
-import { subscribe, unsubscribe } from "../utils/events";
+import { publish, subscribe, unsubscribe } from "../utils/events";
 import secondsToMMSS from "../utils/duration";
 
 function TrackDuration(props) {
@@ -9,38 +9,45 @@ function TrackDuration(props) {
   
   useEffect(() => {
     const interval = setInterval(() => {
-      if (playing) { setElapsed(elapsed => elapsed + 1); }
+      if (playing) {
+        setElapsed(elapsed => elapsed + 1);
+
+        if (props.track.duration) {
+          const percentage = elapsed / props.track.duration;
+          publish("player-progressbar-percentage", { percentage: percentage })
+        }
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, [playing]);
+  }, [playing, elapsed]);
 
   useEffect(() => {
     const listener = (event) => {
       setPlaying(true);
       setElapsed(0);
     }
-    subscribe("reset", listener)
-    return () => unsubscribe("reset", listener)
+    subscribe("player-reset", listener)
+    return () => unsubscribe("player-reset", listener)
   }, []);
 
   useEffect(() => {
     const listener = (event) => { setPlaying(false) }
-    subscribe("pause", listener)
-    return () => unsubscribe("pause", listener)
+    subscribe("player-pause", listener)
+    return () => unsubscribe("player-pause", listener)
   }, []);
 
   useEffect(() => {
     const listener = (event) => { setPlaying(true) }
-    subscribe("resume", listener)
-    return () => unsubscribe("resume", listener)
+    subscribe("player-play", listener)
+    return () => unsubscribe("player-play", listener)
   }, []);
 
   useEffect(() => {
     const listener = (event) => {
       setElapsed(event.detail.elapsed)
     }
-    subscribe("skip", listener)
-    return () => unsubscribe("skip", listener)
+    subscribe("player-seek", listener)
+    return () => unsubscribe("player-seek", listener)
   });
 
   return (
