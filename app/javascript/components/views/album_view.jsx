@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router";
-import globalEventEmitter from "../utils/events";
 
+import { publish } from "../utils/events";
 import Constants from "../utils/constants";
 import ArtistHeader from "../artist_header";
 import AlbumIcon from "../icons/album_icon";
@@ -32,8 +32,7 @@ function AlbumView() {
   }
 
   const play = (track) => {
-    const event = new CustomEvent("play", { detail: { artist: artist, album: album, track: track } });
-    globalEventEmitter.dispatchEvent(event);
+    publish("play", { artist: artist, album: album, track: track });
   }
 
   const addToPlaylist = (track) => {

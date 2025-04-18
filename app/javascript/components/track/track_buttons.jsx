@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
-import globalEventEmitter from "../utils/events";
 
+import { publish } from "../utils/events"
 import PauseIcon from "../icons/pause_icon";
 import PlayIcon from "../icons/play_icon";
 
@@ -9,14 +9,12 @@ function TrackButtons(props) {
 
   function pauseClicked () {
     setPlaying(!playing);
-    const event = new CustomEvent("pause");
-    globalEventEmitter.dispatchEvent(event);
+    publish("pause");
   }
 
   function playClicked () {
     setPlaying(!playing);
-    const event = new CustomEvent("resume");
-    globalEventEmitter.dispatchEvent(event);
+    publish("resume");
   }
 
   return (

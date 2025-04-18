@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Howl, Howler } from "howler";
 
+import { subscribe, unsubscribe, publish } from "./utils/events";
 import Constants from "./utils/constants";
 import Progressbar from "./progressbar";
 import BottomBar from "./bottom_bar";
-import globalEventEmitter from "./utils/events";
 
 function Player() {
   const [artist, setArtist] = useState({});
@@ -30,6 +30,7 @@ function Player() {
       if (player !== null) {
         player.stop();
         setPlayer(null);
+        publish("reset")
       }
 
       setArtist(event.detail.artist); 
@@ -37,20 +38,20 @@ function Player() {
       setTrack(event.detail.track);
       createPlayer(event.detail.track);
     }
-    globalEventEmitter.addEventListener("play", listener)
-    return () => globalEventEmitter.removeEventListener("play", listener)
+    subscribe("play", listener);
+    return () => unsubscribe("play", listener)
   });
 
   useEffect(() => {
     const listener = (_event) => { player.pause(); }
-    globalEventEmitter.addEventListener("pause", listener)
-    return () => globalEventEmitter.removeEventListener("pause", listener)
+    subscribe("pause", listener)
+    return () => unsubscribe("pause", listener)
   });
 
   useEffect(() => {
     const listener = (_event) => { player.play(); }
-    globalEventEmitter.addEventListener("resume", listener)
-    return () => globalEventEmitter.removeEventListener("resume", listener)
+    subscribe("resume", listener)
+    return () => unsubscribe("resume", listener)
   });
 
   return (
