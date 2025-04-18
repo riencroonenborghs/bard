@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import { subscribe, unsubscribe } from "../utils/events";
 import secondsToMMSS from "../utils/duration";
@@ -35,11 +35,23 @@ function TrackDuration(props) {
     return () => unsubscribe("resume", listener)
   }, []);
 
+  useEffect(() => {
+    const listener = (event) => {
+      setElapsed(event.detail.elapsed)
+    }
+    subscribe("skip", listener)
+    return () => unsubscribe("skip", listener)
+  });
+
   return (
     <div className="flex flex-row font-thin ms-4">
       <span>{secondsToMMSS(elapsed)}</span>
-      <div className="ms-1 me-1">&mdash;</div>
-      <span>{secondsToMMSS(props.track.duration)}</span>
+      {props.track.duration &&
+        <Fragment>
+          <div className="ms-1 me-1">&mdash;</div>
+          <span>{secondsToMMSS(props.track.duration)}</span>
+        </Fragment>
+      }
     </div>
   );
 }

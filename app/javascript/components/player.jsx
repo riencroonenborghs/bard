@@ -12,10 +12,6 @@ function Player() {
   const [track, setTrack] = useState({});
   const [player, setPlayer] = useState(null);
 
-  function onProgressbarClick() {
-    console.log("here")
-  }
-
   const createPlayer = (track) => {
     const howl = new Howl({
       src: [`${Constants.host}${track.stream_url}.${track.file_format}`],
@@ -54,11 +50,20 @@ function Player() {
     return () => unsubscribe("resume", listener)
   });
 
+
+  useEffect(() => {
+    const listener = (event) => {
+      player.seek(event.detail.elapsed)
+    }
+    subscribe("skip", listener)
+    return () => unsubscribe("skip", listener)
+  });
+
   return (
     <div className="border-t border-gray-500 sticky bottom-0 w-full bg-gray-700 hiddesn">
       {track.id && 
         <Fragment>
-          <Progressbar track={track} value={0} onClick={onProgressbarClick}></Progressbar>
+          {track.duration && <Progressbar track={track}></Progressbar>}
           <BottomBar artist={artist} album={album} track={track}></BottomBar>
         </Fragment>
       }
