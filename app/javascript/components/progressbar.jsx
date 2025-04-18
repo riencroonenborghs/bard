@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { publish } from "./utils/events";
+import { subscribe, publish } from "./utils/events";
 
 function Progressbar(props) {
   const [value, setValue] = useState(0);
@@ -13,6 +13,14 @@ function Progressbar(props) {
     publish("skip", { elapsed: elapsed });
     setValue(percentage);
   }
+
+  useEffect(() => {
+    const listener = (event) => {
+      setValue(0);
+    }
+    subscribe("reset", listener)
+    return () => unsubscribe("reset", listener)
+  }, []);
 
   return (
     <progress className="w-full bg-gray-700 cursor-pointer" onClick={(event) => progressbarClicked(event)} value={value}>

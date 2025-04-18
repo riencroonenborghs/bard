@@ -2,7 +2,13 @@
 
 class RadioController < ApplicationController
   def index
-    @tracks = Track.all.sample(15)
-    # flash.now[:notice] = "Playing #{@track.title || @track.file_title} by #{@track.artist.name}"
+    @tracks = Track.includes(album: :artist).order("RANDOM()").limit(15)
+
+    respond_to do |format|
+      format.json {
+        render json: { data: RadioJsonRenderer.render(tracks: @tracks).json } 
+      }
+      format.html { render nothing: true }
+    end
   end
 end

@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from 'react';
 import { Link } from "react-router";
 
+import RadioIcon from "./icons/radio_icon";
+
 function Menu(props) {
   const [artistCount, setArtistCount] = useState(0);
   const [albumCount, setAlbumCount] = useState(0);
@@ -57,12 +59,10 @@ function Menu(props) {
           </div>
         </Link>
 
-        <Link to="/tracks" className="ps-8 pe-8 pt-2 pb-2">
+        <Link to="/radio" className="ps-8 pe-8 pt-2 pb-2">
           <div className="flex flex-row justify-between items-center">
-            <div>Tracks</div>
-            <div className="rounded-lg shadow-sm bg-gray-700 text-xs p-1 font-thin">
-              {trackCount}
-            </div>
+            <div>Radio</div>
+            <RadioIcon size={3}></RadioIcon>
           </div>
         </Link>
       </div>

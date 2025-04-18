@@ -4,6 +4,7 @@ class AlbumsController < ApplicationController
   def index
     page = params[:page].to_i || 1
     @albums = Album
+      .includes(:artist)
       .order(title: :asc)
       .page(page)
 

@@ -8,8 +8,7 @@ import ArtistsView from "./views/artists_view";
 import ArtistView from "./views/artist_view";
 import AlbumsView from "./views/albums_view";
 import AlbumView from "./views/album_view";
-import TracksView from "./views/tracks_view";
-import TrackView from "./views/track_view";
+import RadioView from "./views/radio_view";
 
 const style = {
   height: "calc(100vh)"
@@ -27,8 +26,7 @@ root.render(
           <Route path="/artists/:artistId" element={<ArtistView />} />
           <Route path="/albums" element={<AlbumsView />} />
           <Route path="/albums/:albumId" element={<AlbumView />} />
-          <Route path="/tracks" element={<TracksView />} />
-          <Route path="/tracks/:trackId" element={<TrackView />} />
+          <Route path="/radio" element={<RadioView />} />
         </Routes>
       </div>
     </div>
