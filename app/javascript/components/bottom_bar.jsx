@@ -7,10 +7,10 @@ function BottomBar(props) {
   return (
     <div className="flex flex-row p-3 pt-6 pb-6 items-center">
       <div className="flex flex-row items-center w-64">
-        <TrackButtons></TrackButtons>
-        <TrackDuration></TrackDuration>
+        <TrackButtons track={props.track}></TrackButtons>
+        <TrackDuration track={props.track}></TrackDuration>
       </div>
-      <TrackDetails track={props.track}></TrackDetails>
+      <TrackDetails artist={props.artist} album={props.album} track={props.track}></TrackDetails>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 
 import Menu from "./menu";
+import Player from "./player";
 import ArtistsView from "./views/artists_view";
 import ArtistView from "./views/artist_view";
 import AlbumsView from "./views/albums_view";
@@ -31,5 +32,6 @@ root.render(
         </Routes>
       </div>
     </div>
+    <Player></Player>
   </BrowserRouter>
 );
