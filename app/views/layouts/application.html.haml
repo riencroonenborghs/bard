@@ -14,7 +14,9 @@
     = yield :head
 
     %body.bg-gray-800.text-gray-300
+      #counts(data-artist="#{artist_count}" data-album="#{album_count}" data-track="#{track_count}")
       #bard-player
+      
     -# %body.bg-gray-800.text-gray-300(data-controller="alerts")
       -# .flex.flex-row
       -#   .w-64.bg-gray-600.text-white(style="height: calc(100vh)")

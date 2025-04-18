@@ -1,14 +1,26 @@
 import React from "react";
+import { useEffect, useState } from 'react';
 import { Link } from "react-router";
 
 function Menu(props) {
+  const [artistCount, setArtistCount] = useState(0);
+  const [albumCount, setAlbumCount] = useState(0);
+  const [trackCount, setTrackCount] = useState(0);
+
   const style = {
     height: "calc(100vh)"
   };
 
-  const artistCount = 123;
-  const albumCount = 1234;
-  const trackCount = 1235;
+  useEffect(() => {
+    fetchCounts();
+  }, []);
+
+  const fetchCounts = () => {
+    const counts = document.getElementById("counts");
+    setArtistCount(counts.dataset.artist);
+    setAlbumCount(counts.dataset.album);
+    setTrackCount(counts.dataset.track);
+  }
 
   return (
     <div className="w-64 bg-gray-600 text-white" style={style}>
