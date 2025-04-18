@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from 'react';
 
+import Constants from "../utils/constants";
 import Album from "../album";
 
 function AlbumsView() {
@@ -13,7 +14,7 @@ function AlbumsView() {
   }, []);
 
   const fetchAlbums = (currentPage) => {
-    fetch(`http://localhost:5000/albums?page=${currentPage}`)
+    fetch(`${Constants.host}/albums?page=${currentPage}`)
       .then(response => response.json())
       .then(data => {
         setAlbums(data.data);

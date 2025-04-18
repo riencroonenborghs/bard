@@ -1,12 +1,23 @@
 import React, { Fragment, useState } from "react";
+import globalEventEmitter from "../utils/events";
+
 import PauseIcon from "../icons/pause_icon";
 import PlayIcon from "../icons/play_icon";
 
 function TrackButtons(props) {
   const [playing, setPlaying] = useState(false);
 
-  function pauseClicked () { setPlaying(!playing); }
-  function playClicked () { setPlaying(!playing); }
+  function pauseClicked () {
+    setPlaying(!playing);
+    const event = new CustomEvent("pause");
+    globalEventEmitter.dispatchEvent(event);
+  }
+
+  function playClicked () {
+    setPlaying(!playing);
+    const event = new CustomEvent("resume");
+    globalEventEmitter.dispatchEvent(event);
+  }
 
   return (
     <Fragment>

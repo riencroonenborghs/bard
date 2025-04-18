@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import globalEventEmitter from "../utils/events";
 
+import Constants from "../utils/constants";
 import ArtistHeader from "../artist_header";
 import AlbumIcon from "../icons/album_icon";
 import PlayIcon from "../icons/play_icon";
@@ -18,7 +19,7 @@ function AlbumView() {
   }, []);
 
   const fetchAlbum = () => {
-    fetch(`http://localhost:5000/albums/${albumId}`)
+    fetch(`${Constants.host}/albums/${albumId}`)
       .then(response => response.json())
       .then(data => {
         setAlbum(data.data);

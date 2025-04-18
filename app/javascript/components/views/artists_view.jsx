@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from 'react';
 
+import Constants from "../utils/constants";
 import Artist from "../artist";
 
 function ArtistsView() {
@@ -13,7 +14,7 @@ function ArtistsView() {
   }, []);
 
   const fetchArtists = (currentPage) => {
-    fetch(`http://localhost:5000/artists?page=${currentPage}`)
+    fetch(`${Constants.host}/artists?page=${currentPage}`)
       .then(response => response.json())
       .then(data => {
         setArtists(data.data);

@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router";
 
+import Constants from "../utils/constants";
 import Album from "../album";
 
 function ArtistView() {
@@ -13,7 +14,7 @@ function ArtistView() {
   }, []);
 
   const fetchArtist = () => {
-    fetch(`http://localhost:5000/artists/${artistId}`)
+    fetch(`${Constants.host}/artists/${artistId}`)
       .then(response => response.json())
       .then(data => {
         setArtist(data.data);

@@ -14,6 +14,7 @@ class TrackJsonRenderer
       id: @track.id,
       title: "#{@track.title || @track.file_title}",
       url: Rails.application.routes.url_helpers.track_path(@track),
+      stream_url: Rails.application.routes.url_helpers.stream_track_path(@track),
       duration: @track.duration,
       file_format: @track.file_format,
       position: @track.position
