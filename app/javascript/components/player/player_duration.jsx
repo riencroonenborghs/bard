@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { publish, subscribe, unsubscribe } from "../utils/events";
 import secondsToMMSS from "../utils/duration";
 
-function TrackDuration(props) {
+function PlayerDuration(props) {
   const [playing, setPlaying] = useState(true);
   const [elapsed, setElapsed] = useState(0);
   
@@ -63,4 +63,4 @@ function TrackDuration(props) {
   );
 }
 
-export default TrackDuration;
+export default PlayerDuration;
