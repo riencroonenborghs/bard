@@ -14,7 +14,7 @@ function PlayerButtons(props) {
 
   function playClicked () {
     setPlaying(!playing);
-    publish("player-play");
+    publish("player-resume");
   }
 
   return (

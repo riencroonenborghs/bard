@@ -23,20 +23,16 @@ function Player() {
 
   useEffect(() => {
     const listener = (event) => {
-      if (event.detail !== null) {
-        if (player !== null) {
-          player.stop();
-          setPlayer(null);
-          publish("player-reset");
-        }
-  
-        setArtist(event.detail.artist); 
-        setAlbum(event.detail.album); 
-        setTrack(event.detail.track);
-        createPlayer(event.detail.track);
-      } else {
-        player.play();
+      if (player !== null) {
+        player.stop();
+        setPlayer(null);
+        publish("player-reset");
       }
+
+      setArtist(event.detail.artist); 
+      setAlbum(event.detail.album); 
+      setTrack(event.detail.track);
+      createPlayer(event.detail.track);
     }
 
     subscribe("player-play", listener);
@@ -47,6 +43,12 @@ function Player() {
     const listener = (_event) => { player.pause(); }
     subscribe("player-pause", listener)
     return () => unsubscribe("player-pause", listener)
+  });
+
+  useEffect(() => {
+    const listener = (_event) => { player.play(); }
+    subscribe("player-resume", listener)
+    return () => unsubscribe("player-resume", listener)
   });
 
   useEffect(() => {

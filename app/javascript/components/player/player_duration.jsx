@@ -43,6 +43,12 @@ function PlayerDuration(props) {
   }, []);
 
   useEffect(() => {
+    const listener = (event) => { setPlaying(true) }
+    subscribe("player-resume", listener)
+    return () => unsubscribe("player-resume", listener)
+  }, []);
+
+  useEffect(() => {
     const listener = (event) => {
       setElapsed(event.detail.elapsed)
     }

@@ -1,33 +1,14 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router";
 
-import { publish } from "./utils/events";
-import PlayIcon from "./icons/play_icon";
-import QueueIcon from "./icons/queue_icon";
 import AlbumIcon from "./icons/album_icon";
+import TrackButtons from "./track_buttons";
 
 function Track(props) {
-  const play = () => {
-    publish("player-play", { artist: props.artist, album: props.album, track: props.track })
-  }
-
-  const addToPlaylist = () => {
-    console.log("addToPlaylist");
-  }
-
   return (
     <div className="flex flex-row justify-between border-b border-gray-700 p-3 hover:bg-gray-900">
       <div className="flex flex-row">
-        <div className="w-16 flex flex-row justify-center items-center">
-          <a className="cursor-pointer" onClick={() => play()}>
-            <PlayIcon size={4}></PlayIcon>
-          </a>
-        </div>
-        <div className="w-16 flex flex-row justify-center items-center">
-          <a className="cursor-pointer" onClick={() => addToPlaylist()}>
-            <QueueIcon size={4}></QueueIcon>
-          </a>
-        </div>
+        <TrackButtons artist={props.artist} album={props.album} track={props.track}></TrackButtons>
         {props.full &&
           <Fragment>
             <div className="w-16 flex flex-row justify-center items-center">
