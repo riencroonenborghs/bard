@@ -2,7 +2,7 @@ import React from "react";
 
 import AlbumIcon from "../icons/album_icon";
 
-function TrackDuration(props) {
+function TrackDetails(props) {
   const track = props.track;
   const coverImage = track.cover_url !== null;
 
@@ -30,4 +30,4 @@ function TrackDuration(props) {
   );
 }
 
-export default TrackDuration;
+export default TrackDetails;
