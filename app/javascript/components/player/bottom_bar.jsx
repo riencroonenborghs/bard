@@ -2,7 +2,7 @@ import React from "react";
 
 import PlayerButtons from "./player_buttons";
 import PlayerDuration from "./player_duration";
-import TrackDetails from "./track_details";
+import PlayerDetails from "./player_details";
 
 function BottomBar(props) {
   return (
@@ -11,7 +11,7 @@ function BottomBar(props) {
         <PlayerButtons playing={true} artist={props.artist} album={props.album} track={props.track}></PlayerButtons>
         <PlayerDuration track={props.track}></PlayerDuration>
       </div>
-      <TrackDetails artist={props.artist} album={props.album} track={props.track}></TrackDetails>
+      <PlayerDetails artist={props.artist} album={props.album} track={props.track}></PlayerDetails>
     </div>
   );
 }

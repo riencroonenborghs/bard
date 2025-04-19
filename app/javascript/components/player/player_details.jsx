@@ -2,7 +2,7 @@ import React from "react";
 
 import AlbumIcon from "../icons/album_icon";
 
-function TrackDetails(props) {
+function PlayerDetails(props) {
   const track = props.track;
   const coverImage = track.cover_url !== null;
 
@@ -30,4 +30,4 @@ function TrackDetails(props) {
   );
 }
 
-export default TrackDetails;
+export default PlayerDetails;
