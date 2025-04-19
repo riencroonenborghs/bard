@@ -4,7 +4,7 @@ import { publish } from "../utils/events"
 import PauseIcon from "../icons/pause_icon";
 import PlayIcon from "../icons/play_icon";
 
-function TrackButtons(props) {
+function PlayerButtons(props) {
   const [playing, setPlaying] = useState(false);
 
   function pauseClicked () {
@@ -29,4 +29,4 @@ function TrackButtons(props) {
   );
 }
 
-export default TrackButtons;
+export default PlayerButtons;

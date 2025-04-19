@@ -1,6 +1,6 @@
 import React from "react";
 
-import TrackButtons from "./track_buttons";
+import PlayerButtons from "./player_buttons";
 import TrackDuration from "./track_duration";
 import TrackDetails from "./track_details";
 
@@ -8,7 +8,7 @@ function BottomBar(props) {
   return (
     <div className="flex flex-row p-3 pt-6 pb-6 items-center">
       <div className="flex flex-row items-center w-64">
-        <TrackButtons playing={true} artist={props.artist} album={props.album} track={props.track}></TrackButtons>
+        <PlayerButtons playing={true} artist={props.artist} album={props.album} track={props.track}></PlayerButtons>
         <TrackDuration track={props.track}></TrackDuration>
       </div>
       <TrackDetails artist={props.artist} album={props.album} track={props.track}></TrackDetails>
