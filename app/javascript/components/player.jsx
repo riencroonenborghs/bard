@@ -3,8 +3,8 @@ import { Howl, Howler } from "howler";
 
 import { subscribe, unsubscribe, publish } from "./utils/events";
 import Constants from "./utils/constants";
-import Progressbar from "./progressbar";
-import BottomBar from "./bottom_bar";
+import Progressbar from "./player/progressbar";
+import BottomBar from "./player/bottom_bar";
 
 function Player() {
   const [artist, setArtist] = useState({});

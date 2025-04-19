@@ -1,4 +1,5 @@
 import React from "react";
+
 import AlbumIcon from "../icons/album_icon";
 
 function TrackDuration(props) {

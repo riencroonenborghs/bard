@@ -1,7 +1,8 @@
 import React from "react";
-import TrackButtons from "./track/track_buttons";
-import TrackDuration from "./track/track_duration";
-import TrackDetails from "./track/track_details";
+
+import TrackButtons from "./track_buttons";
+import TrackDuration from "./track_duration";
+import TrackDetails from "./track_details";
 
 function BottomBar(props) {
   return (

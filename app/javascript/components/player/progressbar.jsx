@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { subscribe, unsubscribe, publish } from "./utils/events";
+import { subscribe, unsubscribe, publish } from "../utils/events";
 
 function Progressbar(props) {
   const [value, setValue] = useState(0);
