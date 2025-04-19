@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
-import { publish } from "../utils/events"
+import { publish, subscribe, unsubscribe } from "../utils/events"
 import PauseIcon from "../icons/pause_icon";
 import PlayIcon from "../icons/play_icon";
 
@@ -16,6 +16,14 @@ function PlayerButtons(props) {
     setPlaying(!playing);
     publish("player-resume");
   }
+
+  useEffect(() => {
+    const listener = (_event) => {
+      setPlaying(false);
+    }
+    subscribe("player-reset", listener)
+    return () => unsubscribe("player-reset", listener)
+  });
 
   return (
     <Fragment>
