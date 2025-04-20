@@ -7,9 +7,9 @@ import Progressbar from "./player/progressbar";
 import BottomBar from "./player/bottom_bar";
 
 function Player() {
-  const playing = useSelector((state) => { state.player.playing });
-  const resumed = useSelector((state) => { state.player.resumed });
-  const paused = useSelector((state) => { state.player.paused });
+  const playing = useSelector((state) => state.player.playing);
+  const resumed = useSelector((state) => state.player.resumed);
+  const paused = useSelector((state) => state.player.paused);
 
   const artist = useSelector((state) => state.track.artist);
   const album = useSelector((state) => state.track.album);
@@ -26,19 +26,19 @@ function Player() {
       howl.play();
       setPlayer(howl);
     }
-  })
+  }, [playing, resumed]);
 
   useEffect(() => {
-    if (paused) {
+    if (track.id && paused) {
       player.pause();
     }
-  });
+  }, [paused]);
 
   useEffect(() => {
     if (playing && resumed) {
       player.play();
     }
-  });
+  }, [playing, resumed])
 
   // useEffect(() => {
   //   const listener = (event) => {
@@ -52,12 +52,6 @@ function Player() {
     <div className="border-t border-gray-500 sticky bottom-0 w-full bg-gray-700 hiddesn">
       {track.id && 
         <Fragment>
-          {track.title} -
-          {album.title} -
-          {artist.name} -
-          {playing ? 'playing' : 'not playing'} -
-          {paused ? 'paused' : 'not paused'} -
-          {resumed ? 'resumed' : 'not resumed'} -
           {track.duration && <Progressbar track={track}></Progressbar>}
           <BottomBar artist={artist} album={album} track={track}></BottomBar>
         </Fragment>
