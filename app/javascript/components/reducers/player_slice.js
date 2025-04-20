@@ -19,6 +19,8 @@ export const playerSlice = createSlice({
       state.playing = true;
       state.paused = false;
       state.resumed = false;
+      state.elapsed = 0;
+      state.percentage = 0;
 
       if (state.player !== null) {
         state.player.stop();
