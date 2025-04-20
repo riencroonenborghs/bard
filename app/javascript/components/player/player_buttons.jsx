@@ -7,7 +7,7 @@ import PlayIcon from "../icons/play_icon";
 
 function PlayerButtons(props) {
   const playing = useSelector((state) => state.player.playing);
-  const playingTrackId = useSelector((state) => state.player.trackId);
+  const track = useSelector((state) => state.track.track);
   const dispatch = useDispatch()
 
   function pauseClicked () {
@@ -20,10 +20,10 @@ function PlayerButtons(props) {
 
   return (
     <Fragment>
-      <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "" : "hidden") } onClick={pauseClicked}>
+      <div className={"cursor-pointer " + (playing && props.track.id === track.id ? "" : "hidden") } onClick={pauseClicked}>
         <PauseIcon size={4} />
       </div>
-      <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "hidden" : "") } onClick={playClicked}>
+      <div className={"cursor-pointer " + (playing && props.track.id === track.id ? "hidden" : "") } onClick={playClicked}>
         <PlayIcon size={4} />
       </div>
     </Fragment>

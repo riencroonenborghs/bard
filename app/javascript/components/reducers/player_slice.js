@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const playerSlice = createSlice({
   name: "player",
   initialState: {
-    trackId: null,
+    track: null,
     playing: false,
     paused: true,
     resumed: false,
@@ -12,7 +12,7 @@ export const playerSlice = createSlice({
   },
   reducers: {
     play: (state, action) => {
-      state.trackId = action.payload.trackId;
+      state.track = action.payload.track;
       state.playing = true;
       state.paused = false;
       state.resumed = false;
