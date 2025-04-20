@@ -1,68 +1,63 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
+import { useSelector } from "react-redux";
 
-import { subscribe, unsubscribe, publish } from "./utils/events";
 import Constants from "./utils/constants";
 import Progressbar from "./player/progressbar";
 import BottomBar from "./player/bottom_bar";
 
 function Player() {
-  const [artist, setArtist] = useState({});
-  const [album, setAlbum] = useState({});
-  const [track, setTrack] = useState({});
+  const playing = useSelector((state) => { state.player.playing });
+  const resumed = useSelector((state) => { state.player.resumed });
+  const paused = useSelector((state) => { state.player.paused });
+
+  const artist = useSelector((state) => state.track.artist);
+  const album = useSelector((state) => state.track.album);
+  const track = useSelector((state) => state.track.track);
+
   const [player, setPlayer] = useState(null);
 
-  const createPlayer = (track) => {
-    const howl = new Howl({
-      src: [`${Constants.host}${track.stream_url}.${track.file_format}`],
-      html5: true
-    });
-    howl.play();
-    setPlayer(howl);
-  }
-
   useEffect(() => {
-    const listener = (event) => {
-      if (player !== null) {
-        player.stop();
-        setPlayer(null);
-        publish("player-reset");
-      }
-
-      setArtist(event.detail.artist); 
-      setAlbum(event.detail.album); 
-      setTrack(event.detail.track);
-      createPlayer(event.detail.track);
+    if (playing && !resumed) {
+      const howl = new Howl({
+        src: [`${Constants.host}${track.stream_url}.${track.file_format}`],
+        html5: true
+      });
+      howl.play();
+      setPlayer(howl);
     }
-
-    subscribe("player-play", listener);
-    return () => unsubscribe("player-play", listener)
-  });
+  })
 
   useEffect(() => {
-    const listener = (_event) => { player.pause(); }
-    subscribe("player-pause", listener)
-    return () => unsubscribe("player-pause", listener)
-  });
-
-  useEffect(() => {
-    const listener = (_event) => { player.play(); }
-    subscribe("player-resume", listener)
-    return () => unsubscribe("player-resume", listener)
-  });
-
-  useEffect(() => {
-    const listener = (event) => {
-      player.seek(event.detail.elapsed)
+    if (paused) {
+      player.pause();
     }
-    subscribe("player-seek", listener)
-    return () => unsubscribe("player-seek", listener)
   });
+
+  useEffect(() => {
+    if (playing && resumed) {
+      player.play();
+    }
+  });
+
+  // useEffect(() => {
+  //   const listener = (event) => {
+  //     player.seek(event.detail.elapsed)
+  //   }
+  //   subscribe("player-seek", listener)
+  //   return () => unsubscribe("player-seek", listener)
+  // });
 
   return (
     <div className="border-t border-gray-500 sticky bottom-0 w-full bg-gray-700 hiddesn">
       {track.id && 
         <Fragment>
+          {track.title} -
+          {album.title} -
+          {artist.name} -
+          {playing ? 'playing' : 'not playing'} -
+          {paused ? 'paused' : 'not paused'} -
+          {resumed ? 'resumed' : 'not resumed'} -
           {track.duration && <Progressbar track={track}></Progressbar>}
           <BottomBar artist={artist} album={album} track={track}></BottomBar>
         </Fragment>

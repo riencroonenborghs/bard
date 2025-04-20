@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
+import store from "./reducers/store";
+import { Provider } from "react-redux";
 
-import { subscribe } from "./utils/events";
 import Menu from "./menu";
 import Player from "./player";
 import ArtistsView from "./views/artists_view";
@@ -14,24 +15,26 @@ function Bard(props) {
   const style = {
     height: "calc(100vh)"
   };
-  
+
   return (
-    <BrowserRouter>
-      <div className="flex flex-row">
-        <Menu></Menu>
-        <div className="w-full overflow-auto" style={style}>
-          <Routes>
-            <Route path="/" element={<ArtistsView />} />
-            <Route path="/artists" element={<ArtistsView />} />
-            <Route path="/artists/:artistId" element={<ArtistView />} />
-            <Route path="/albums" element={<AlbumsView />} />
-            <Route path="/albums/:albumId" element={<AlbumView />} />
-            <Route path="/radio" element={<RadioView />} />
-          </Routes>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="flex flex-row">
+          <Menu></Menu>
+          <div className="w-full overflow-auto" style={style}>
+            <Routes>
+              <Route path="/" element={<ArtistsView />} />
+              <Route path="/artists" element={<ArtistsView />} />
+              <Route path="/artists/:artistId" element={<ArtistView />} />
+              <Route path="/albums" element={<AlbumsView />} />
+              <Route path="/albums/:albumId" element={<AlbumView />} />
+              <Route path="/radio" element={<RadioView />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-      <Player></Player>
-    </BrowserRouter>
+        <Player></Player>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

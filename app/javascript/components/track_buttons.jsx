@@ -1,59 +1,52 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { current } from "./reducers/track_slice";
+import { play, pause, resume } from "./reducers/player_slice";
 
-import { publish, subscribe, unsubscribe } from "./utils/events";
 import PlayIcon from "./icons/play_icon";
 import PauseIcon from "./icons/pause_icon";
 import QueueIcon from "./icons/queue_icon";
 
 function TrackButtons(props) {
-  const [playing, setPlaying] = useState(false);
-
-  const play = () => {
-    publish("player-play", { artist: props.artist, album: props.album, track: props.track })
-  }
+  const playing = useSelector((state) => state.player.playing);
+  const playingTrackId = useSelector((state) => state.player.trackId);
+  const track = useSelector((state) => state.track.track);
+  const dispatch = useDispatch()
 
   const addToPlaylist = () => {
     console.log("addToPlaylist");
   }
 
-  useEffect(() => {
-    const listener = (event) => {
-      setPlaying(props.track.id === event.detail.track.id);
-    }
-
-    subscribe("player-play", listener)
-    return () => unsubscribe("player-play", listener)
-  });
-
-  useEffect(() => {
-    const listener = (event) => {
-      setPlaying(false);
-    }
-
-    subscribe("player-pause", listener)
-    return () => unsubscribe("player-pause", listener)
-  });
-
   function pauseClicked () {
-    setPlaying(false);
-    publish("player-pause");
+    dispatch(pause())
   }
 
   function playClicked () {
-    if (playing) {
-      publish("player-resume");
+    if (track !== null) {
+      dispatch(
+        current({
+          artist: props.artist,
+          album: props.album,
+          track: props.track
+        })
+      );
+      dispatch(
+        play({
+          trackId: props.track.id
+        })
+      );
     } else {
-      play();
+      dispatch(resume())
     }
   }
 
   return (
     <Fragment>
       <div className="w-16 flex flex-row justify-center items-center">
-        <div className={"cursor-pointer " + (playing ? "" : "hidden") } onClick={pauseClicked}>
+        <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "" : "hidden") } onClick={pauseClicked}>
           <PauseIcon size={4} />
         </div>
-        <div className={"cursor-pointer " + (playing ? "hidden" : "") } onClick={playClicked}>
+        <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "hidden" : "") } onClick={playClicked}>
           <PlayIcon size={4} />
         </div>
       </div>

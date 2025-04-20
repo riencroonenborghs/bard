@@ -1,36 +1,29 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { publish, subscribe, unsubscribe } from "../utils/events"
+import { pause, resume } from "../reducers/player_slice";
 import PauseIcon from "../icons/pause_icon";
 import PlayIcon from "../icons/play_icon";
 
 function PlayerButtons(props) {
-  const [playing, setPlaying] = useState(false);
+  const playing = useSelector((state) => state.player.playing);
+  const playingTrackId = useSelector((state) => state.player.trackId);
+  const dispatch = useDispatch()
 
   function pauseClicked () {
-    setPlaying(!playing);
-    publish("player-pause");
+    dispatch(pause())
   }
 
   function playClicked () {
-    setPlaying(!playing);
-    publish("player-resume");
+    dispatch(resume());
   }
-
-  useEffect(() => {
-    const listener = (_event) => {
-      setPlaying(false);
-    }
-    subscribe("player-reset", listener)
-    return () => unsubscribe("player-reset", listener)
-  });
 
   return (
     <Fragment>
-      <div className={"cursor-pointer " + (playing ? "hidden" : "") } onClick={pauseClicked}>
+      <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "" : "hidden") } onClick={pauseClicked}>
         <PauseIcon size={4} />
       </div>
-      <div className={"cursor-pointer " + (playing ? "" : "hidden") } onClick={playClicked}>
+      <div className={"cursor-pointer " + (playing && props.track.id === playingTrackId ? "hidden" : "") } onClick={playClicked}>
         <PlayIcon size={4} />
       </div>
     </Fragment>
