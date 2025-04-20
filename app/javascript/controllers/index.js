@@ -6,15 +6,3 @@ import { application } from "./application"
 
 // import HelloController from "./hello_controller"
 // application.register("hello", HelloController)
-
-import PlayerController from "./player_controller"
-application.register("player", PlayerController)
-
-import PlaylistController from "./playlist_controller"
-application.register("playlist", PlaylistController)
-
-import TrackController from "./track_controller"
-application.register("track", TrackController)
-
-import AlertsController from "./alerts_controller"
-application.register("alerts", AlertsController)
