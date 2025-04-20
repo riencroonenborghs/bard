@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import AlbumIcon from "../icons/album_icon";
+import { Link } from "react-router";
 
 function PlayerDetails(props) {
   const artist = useSelector((state) => state.track.artist);
@@ -19,13 +20,13 @@ function PlayerDetails(props) {
           {track.title}
         </div>
         <div className="font-thin text-sm">
-          <a href={artist.url} data-turbo-target="content">
+          <Link to={artist.url}>
             {artist.name}
-          </a>
+          </Link>
           &mdash;
-          <a href={album.url} data-turbo-target="content">
+          <Link to={album.url}>
             {album.title}
-          </a>
+          </Link>
         </div>
       </div>
     </div>
