@@ -8,10 +8,10 @@ function BottomBar(props) {
   return (
     <div className="flex flex-row p-3 pt-6 pb-6 items-center">
       <div className="flex flex-row items-center w-64">
-        <PlayerButtons playing={true} artist={props.artist} album={props.album} track={props.track}></PlayerButtons>
-        <PlayerDuration track={props.track}></PlayerDuration>
+        <PlayerButtons></PlayerButtons>
+        <PlayerDuration></PlayerDuration>
       </div>
-      <PlayerDetails artist={props.artist} album={props.album} track={props.track}></PlayerDetails>
+      <PlayerDetails></PlayerDetails>
     </div>
   );
 }
