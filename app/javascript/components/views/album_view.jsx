@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import { publish } from "../utils/events";
 import Constants from "../utils/constants";
 import ArtistHeader from "../artist_header";
 import AlbumIcon from "../icons/album_icon";

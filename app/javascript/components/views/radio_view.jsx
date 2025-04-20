@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 
-import { publish } from "../utils/events";
 import Constants from "../utils/constants";
 import Track from "../track";
 
